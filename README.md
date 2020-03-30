@@ -54,7 +54,7 @@ A hub for tourists, new students, and anyone who may be unfamiliar with the area
 
 ### 3. Navigation
 
-**Tab Navigation** (Tab to Screen)
+**Tab Navigation**
 
 * [fill out your first tab]
 * [fill out your second tab]
@@ -77,7 +77,7 @@ A hub for tourists, new students, and anyone who may be unfamiliar with the area
 <img src="https://github.com/humboldt-cs/cs480-hum-spots/blob/master/wireframes/Drawer%20Menu.JPG" width=400>
 
 ### [BONUS] Interactive Prototype
-<img src="https://github.com/humboldt-cs/cs480-hum-spots/blob/master/wireframes/interactivePrototype.gif" width=600>
+<img src="https://github.com/humboldt-cs/cs480-hum-spots/blob/master/wireframes/interactivePrototype.gif" width=400>
 
 ## Schema 
 [This section will be completed in Unit 9]
