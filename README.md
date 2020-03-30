@@ -31,6 +31,7 @@ A hub for tourists, new students, and anyone who may be unfamiliar with the area
 * Events from around Humboldt County should be obtained via API or similar source and displayed to user
 * Events from Humboldt State University should be obtained via API or similar source and displayed to user
 * Detailed page for a specific event can be viewed when event has been selected.
+* Map page for connecting events to locations
 
 **Optional Nice-to-have Stories**
 
