@@ -1,7 +1,7 @@
 Group Project - README Template
 ===
 
-# APP_NAME_HERE
+# Humboldt Tourism App
 
 ## Table of Contents
 1. [Overview](#Overview)
@@ -11,16 +11,16 @@ Group Project - README Template
 
 ## Overview
 ### Description
-[Description of your app]
+A hub for tourists, new students, and anyone who may be unfamiliar with the area to find popular sites and activities in the Humboldt area.
 
 ### App Evaluation
-[Evaluation of your app across the following attributes]
-- **Category:**
-- **Mobile:**
-- **Story:**
-- **Market:**
-- **Habit:**
-- **Scope:**
+
+- **Category: Travel/Tourism**
+- **Mobile: Find locations on map within the app. Take pictures from device, post to app. Communicate with other people using this app**
+- **Story: Clear value to incoming freshman, transfer students, potential new students and visiting family and friends of students**
+- **Market: Incoming/Potential new students and visiting  families**
+- **Habit: App is more informative than social driven. The user will access the app when they want to know about their surroundings**
+- **Scope: There is many functionalities that can be added to the stripped down version of this app. However, a stripped down version of the app is still very useful and informative**
 
 ## Product Spec
 
