@@ -28,22 +28,28 @@ A hub for tourists, new students, and anyone who may be unfamiliar with the area
 
 **Required Must-have Stories**
 
-* Events from around the county should be obtained via API or similar source and displayed to user
+* Events from around Humboldt County should be obtained via API or similar source and displayed to user
 * Events from Humboldt State University should be obtained via API or similar source and displayed to user
 * Detailed page for a specific event can be viewed when event has been selected.
 
 **Optional Nice-to-have Stories**
 
-* [fill in your required user stories here]
-* ...
+* User can take and upload events/images within the app
+* Users can interact with eachother via app for meet-ups/group activities.
 
 ### 2. Screen Archetypes
 
-* [list first screen here]
-   * [list associated required story here]
+* Home Timeline
+   * A click on a specific event leads to a detailed view of the event.
    * ...
-* [list second screen here]
-   * [list associated required story here]
+* Humboldt State University Events Timeline
+   * A click on a specific event leads to a detailed view of the event.
+   * ...
+* Events Map
+   * A click on a pinned event within the map view leads to a detailed view of the event.
+   * ...
+* Drawer Menu
+   * A click on an item in the menu leads to the fragment associated with that item (Timeline, Map, etc.).
    * ...
 
 ### 3. Navigation
