@@ -28,8 +28,9 @@ A hub for tourists, new students, and anyone who may be unfamiliar with the area
 
 **Required Must-have Stories**
 
-* [fill in your required user stories here]
-* ...
+* Events from around the county should be obtained via API or similar source and displayed to user
+* Events from Humboldt State University should be obtained via API or similar source and displayed to user
+* Detailed page for a specific event can be viewed when event has been selected.
 
 **Optional Nice-to-have Stories**
 
