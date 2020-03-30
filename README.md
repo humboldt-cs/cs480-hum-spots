@@ -71,11 +71,12 @@ A hub for tourists, new students, and anyone who may be unfamiliar with the area
 
 ## Wireframes
 [Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+<img src="ttt" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
 
 ### [BONUS] Interactive Prototype
+<img src="https://github.com/humboldt-cs/cs480-hum-spots/blob/master/wireframes/interactivePrototype.gif" width=600>
 
 ## Schema 
 [This section will be completed in Unit 9]
