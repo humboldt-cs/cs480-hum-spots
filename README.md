@@ -69,11 +69,12 @@ A hub for tourists, new students, and anyone who may be unfamiliar with the area
    * [list screen navigation here]
    * ...
 
-## Wireframes
-[Add picture of your hand sketched wireframes in this section]
-<img src="ttt" width=600>
-
 ### [BONUS] Digital Wireframes & Mockups
+<img src="https://github.com/humboldt-cs/cs480-hum-spots/blob/master/wireframes/Home%20Timeline.JPG" width=400>
+<img src="https://github.com/humboldt-cs/cs480-hum-spots/blob/master/wireframes/HSU%20Events%20Timeline.JPG" width=400>
+<img src="https://github.com/humboldt-cs/cs480-hum-spots/blob/master/wireframes/Detailed%20Event%20View.JPG" width=400>
+<img src="https://github.com/humboldt-cs/cs480-hum-spots/blob/master/wireframes/Events%20Map.JPG" width=400>
+<img src="https://github.com/humboldt-cs/cs480-hum-spots/blob/master/wireframes/Drawer%20Menu.JPG" width=400>
 
 ### [BONUS] Interactive Prototype
 <img src="https://github.com/humboldt-cs/cs480-hum-spots/blob/master/wireframes/interactivePrototype.gif" width=600>
