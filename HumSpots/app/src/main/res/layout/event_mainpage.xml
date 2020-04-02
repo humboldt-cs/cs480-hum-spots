@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ev_main_img"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/ev_main_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ev_main_img"
+        android:layout_marginTop="5dp"
+        android:text="Beers in the Plaza" />
+
+    <TextView
+        android:id="@+id/ev_main_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ev_main_title"
+        android:layout_marginTop="5dp"
+        android:text="April 14th" />
+
+    <TextView
+        android:id="@+id/ev_main_desc"
+        android:layout_width="match_parent"
+        android:layout_height="306dp"
+        android:layout_below="@+id/ev_main_date"
+        android:layout_marginTop="5dp"
+        android:text="This is where all the details of the event will go and any times or any requirements for the event or rules about the event" />
+
+    <TextView
+        android:id="@+id/ev_main_extras"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ev_main_desc"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="this space will be for phone numbers and links although maybe we can just put this in with the text description or something" />
+
+</RelativeLayout>
