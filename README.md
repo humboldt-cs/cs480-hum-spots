@@ -1,1 +1,0 @@
-# cs480-hum-spots
