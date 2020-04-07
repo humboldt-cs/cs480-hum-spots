@@ -1,4 +1,17 @@
 package com.example.humspots;
 
-public class ParseApplication {
+import android.app.Application;
+
+import com.parse.Parse;
+
+public class ParseApplication extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        Parse.initialize(new Parse.Configuration.Builder(this)
+                .applicationId("humspots_cs480")
+                .clientKey("QfXcq27rsB")
+                .server("http://humspots.herokuapp.com/parse").build());
+    }
 }
