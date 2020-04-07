@@ -56,12 +56,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void done(ParseUser user, ParseException e) {
                 if(e == null){
-                    Toast.makeText(LoginActivity.this, "User signin successfull", Toast.LENGTH_LONG).show();
-                    Log.i(TAG, "User signin successfull");
+                    Toast.makeText(LoginActivity.this, "User sign-in successful", Toast.LENGTH_LONG).show();
+                    Log.i(TAG, "User sign-in successful");
                     goMainActivity();
                 }
                 else{
-                    Log.e(TAG, "User signin unsuccessfull", e);
+                    Log.e(TAG, "User sign-in unsuccessful", e);
                     return;
                 }
             }
