@@ -73,11 +73,50 @@ A hub for tourists, new students, and anyone who may be unfamiliar with the area
 ### [BONUS] Interactive Prototype
 <img src="https://github.com/humboldt-cs/cs480-hum-spots/blob/master/wireframes/interactivePrototype.gif" width=400>
 
-## Schema 
-[This section will be completed in Unit 9]
+## Schema
 ### Models
-[Add table of models]
+#### Event
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | eventId       | String   | unique id for the event (default field) |
+   | author        | Pointer to User| image author |
+   | image(s)      | File(s)  | poster/image(s) about the event|
+   | eventDate     | DateTime | date when event is to take place |
+   | eventTitle    | String   | name of event |
+   | eventDescription | String | Description of event |
+   | eventMapLocation | Map Coordinates | Location on map where event is to take place |
+   | eventVenue    | String | Arena/Venue where event is to take place |
+
 ### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+#### List of network requests by screen
+- Home Timeline
+      - (Read/GET) Query all events where user is author
+         ```swift
+         
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.get(TEST_URL, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                Log.d(TAG, "onSuccess");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.d(TAG, "onFailure");
+            }
+           // TODO: Do something with posts...
+            }
+         }
+         ```
+
+#### [OPTIONAL:] Existing API Endpoints
+##### Eventbrite
+- Base URL - [https://www.eventbriteapi.com/v3](https://www.eventbriteapi.com/v3)
+
+   HTTP Verb | Endpoint | Description
+   ----------|----------|------------
+    `GET`    | venues/venue_id/events/ | get events by venue
+    `GET`    | organizations/organization_id/events/ | get events by organization
+    `GET`    | series/event_series_id/events/  | get event by event series
+   
