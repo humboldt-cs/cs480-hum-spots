@@ -40,8 +40,8 @@ public class LoginPage extends AppCompatActivity {
     }
 
     private boolean checkUserNameAndPassword() {
-        if((etUserName.getText().toString() == "User Name") || (etUserName.getText().toString() == "")
-        || (etPassword.getText().toString() == "Password") || (etPassword.getText().toString() == "")){
+        if((etUserName.getText().toString().contentEquals("User Name")) || (etUserName.getText().toString().isEmpty())
+        || (etPassword.getText().toString().contentEquals("Password")) || (etPassword.getText().toString().isEmpty())){
             Toast.makeText(this, "Username: " + etUserName.getText().toString() + " Password: " + etPassword.getText().toString(), Toast.LENGTH_LONG).show();
             return false;
         }
