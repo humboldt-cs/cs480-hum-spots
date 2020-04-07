@@ -5,10 +5,10 @@
     android:background="@drawable/mist_mountain">
 
     <EditText
-        android:id="@+id/password_et"
+        android:id="@+id/etPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/userName_et"
+        android:layout_below="@+id/etUserName"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
@@ -29,10 +29,10 @@
         android:id="@+id/title_tv"
         android:layout_width="216dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/userName_et"
-        android:layout_alignLeft="@+id/userName_et"
-        android:layout_alignEnd="@+id/userName_et"
-        android:layout_alignRight="@+id/userName_et"
+        android:layout_alignStart="@+id/etUserName"
+        android:layout_alignLeft="@+id/etUserName"
+        android:layout_alignEnd="@+id/etUserName"
+        android:layout_alignRight="@+id/etUserName"
         android:layout_alignParentTop="true"
         android:layout_marginStart="64dp"
         android:layout_marginLeft="64dp"
@@ -44,14 +44,14 @@
         android:textSize="20sp" />
 
     <Button
-        android:id="@+id/login_btn"
+        android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/password_et"
-        android:layout_alignStart="@+id/password_et"
-        android:layout_alignLeft="@+id/password_et"
-        android:layout_alignEnd="@+id/password_et"
-        android:layout_alignRight="@+id/password_et"
+        android:layout_below="@+id/etPassword"
+        android:layout_alignStart="@+id/etPassword"
+        android:layout_alignLeft="@+id/etPassword"
+        android:layout_alignEnd="@+id/etPassword"
+        android:layout_alignRight="@+id/etPassword"
         android:layout_marginStart="62dp"
         android:layout_marginLeft="69dp"
         android:layout_marginTop="34dp"
@@ -60,14 +60,14 @@
         android:text="Login" />
 
     <Button
-        android:id="@+id/create_btn"
+        android:id="@+id/btnCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/login_btn"
-        android:layout_alignStart="@+id/login_btn"
-        android:layout_alignLeft="@+id/login_btn"
-        android:layout_alignEnd="@+id/login_btn"
-        android:layout_alignRight="@+id/login_btn"
+        android:layout_below="@+id/btnLogin"
+        android:layout_alignStart="@+id/btnLogin"
+        android:layout_alignLeft="@+id/btnLogin"
+        android:layout_alignEnd="@+id/btnLogin"
+        android:layout_alignRight="@+id/btnLogin"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="86dp"
         android:layout_marginTop="155dp"
@@ -76,7 +76,7 @@
         android:text="Create New User" />
 
     <EditText
-        android:id="@+id/userName_et"
+        android:id="@+id/etUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
