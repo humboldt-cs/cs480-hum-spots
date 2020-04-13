@@ -20,9 +20,9 @@
         android:layout_marginRight="80dp"
         android:background="#6BFFFFFF"
         android:ems="10"
+        android:hint="Password"
         android:inputType="textPassword"
         android:shadowColor="#FFFFFF"
-        android:text="Password"
         android:textColor="#000000" />
 
     <TextView
@@ -91,9 +91,9 @@
         android:layout_marginRight="25dp"
         android:background="#6AFFFFFF"
         android:ems="10"
+        android:hint="User Nme"
         android:inputType="textPersonName"
         android:shadowColor="#FFFFFF"
-        android:text="User Name"
         android:textColor="#030303" />
 
 </RelativeLayout>

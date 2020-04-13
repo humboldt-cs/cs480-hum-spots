@@ -12,6 +12,6 @@ public class ParseApplication extends Application {
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("humspots_cs480")
                 .clientKey("QfXcq27rsB")
-                .server("http://humspots.herokuapp.com/parse").build());
+                .server("https://humspots.herokuapp.com/parse/").build());
     }
 }
