@@ -63,6 +63,9 @@ A hub for tourists, new students, and anyone who may be unfamiliar with the area
 
 <img src="https://github.com/humboldt-cs/cs480-hum-spots/blob/master/wireframes/Flow%20Navigation.JPG" width=400>
 
+### Walkthrough (unit 10)
+<img src="https://github.com/humboldt-cs/cs480-hum-spots/blob/master/walkthroughunit10.gif" width=400>
+
 ### [BONUS] Digital Wireframes & Mockups
 <img src="https://github.com/humboldt-cs/cs480-hum-spots/blob/master/wireframes/Home%20Timeline.JPG" width=400>
 <img src="https://github.com/humboldt-cs/cs480-hum-spots/blob/master/wireframes/HSU%20Events%20Timeline.JPG" width=400>
