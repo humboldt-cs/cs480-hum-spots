@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp">
+
+    <ImageView
+        android:id="@+id/ivTrailImage"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:contentDescription="photo associated with trail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/tvTrailName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/ivTrailImage"
+        android:text="Name of Trail"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tvTrailSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTrailLength"
+        android:layout_alignStart="@+id/tvTrailName"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="3dp"
+        android:text="This is a short summary or description of the trail." />
+
+    <TextView
+        android:id="@+id/tvTrailLength"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTrailName"
+        android:layout_alignStart="@+id/tvTrailName"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="3dp"
+        android:text="(5 mi)"
+        android:textSize="16sp" />
+
+
+</RelativeLayout>

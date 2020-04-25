@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">HumSpots</string>
+    <!--//<string name="google_maps_api_key">AIzaSyDllkOvwuCEnI2pET-h8LSvB95SiT2_RLE</string>-->
+    <string name="title_activity_maps">Map</string>
 </resources>

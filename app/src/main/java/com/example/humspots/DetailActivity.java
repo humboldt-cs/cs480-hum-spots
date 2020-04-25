@@ -40,7 +40,7 @@ public class DetailActivity extends AppCompatActivity {
         tvTitle = findViewById(R.id.tvTitle);
         tvDescription = findViewById(R.id.tvDescription);
 
-        Event event = Parcels.unwrap(getIntent().getParcelableExtra("event"));
+        final Event event = Parcels.unwrap(getIntent().getParcelableExtra("event"));
 
         Glide.with(this).load(event.getPosterURL()).into(ivImage);
 
@@ -53,8 +53,9 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getBaseContext(), "Map loading..", Toast.LENGTH_SHORT).show();
-                //Intent i = new Intent(DetailActivity.this, MapsActivity.class);
-                //DetailActivity.this.startActivity(i);
+                Intent i = new Intent(DetailActivity.this, MapsActivity.class);
+                //i.putExtra("event", Parcels.wrap(event));
+                DetailActivity.this.startActivity(i);
             }
         });
     }

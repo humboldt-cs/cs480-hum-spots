@@ -1,16 +1,15 @@
 package com.example.humspots;
 
+import android.os.Bundle;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.util.Log;
-
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-import com.example.humspots.adapters.EventAdapter;
-import com.example.humspots.models.Event;
+import com.example.humspots.adapters.TrailsAdapter;
 import com.example.humspots.models.Trail;
 
 import org.json.JSONArray;
@@ -22,14 +21,12 @@ import java.util.List;
 
 import okhttp3.Headers;
 
-public class MainActivity extends AppCompatActivity {
+public class TrailsActivity extends AppCompatActivity{
 
-    public static final String EVENTBRITE_URL = "https://www.eventbriteapi.com/v3/users/me/?token=FXZ47VT64UDMVS6KNOP4";
-    public static final String TEST_URL = "https://www.eventbriteapi.com/v3/events/99084732101/?token=FXZ47VT64UDMVS6KNOP4";
-    public static final String ORGANIZATION_URL = "https://www.eventbriteapi.com/v3/organizations/436148186604/events/?token=FXZ47VT64UDMVS6KNOP4";
-    public static final String TAG = "MainActivity";
+    public static final String TRAILS_URL = "https://www.hikingproject.com/data/get-trails?lat=40.875737&lon=-124.078594&maxDistance=25&key=200729737-84ca63f82302306e434390a4a8366855";
+    public static final String TAG = "TrailsActivity";
 
-    List<Event> events;
+    List<Trail> trails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,29 +34,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         RecyclerView rvEvents = findViewById(R.id.rvEvents);
 
-        events = new ArrayList<>();
+        trails = new ArrayList<>();
         //create the adapter
-        final EventAdapter eventAdapter = new EventAdapter(this, events);
+        final TrailsAdapter trailsAdapter = new TrailsAdapter(this, trails);
 
         //set the adapter on the recycler view
-        rvEvents.setAdapter(eventAdapter);
+        rvEvents.setAdapter(trailsAdapter);
 
         //set a layout manager on RV
         rvEvents.setLayoutManager(new LinearLayoutManager(this));
 
         AsyncHttpClient client = new AsyncHttpClient();
 
-        client.get(ORGANIZATION_URL, new JsonHttpResponseHandler() {
+        client.get(TRAILS_URL, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.d(TAG, "onSuccess");
                 JSONObject jsonObject = json.jsonObject;
                 try {
-                    JSONArray results = jsonObject.getJSONArray("events");
+                    JSONArray results = jsonObject.getJSONArray("trails");
                     Log.i(TAG, "Results: " + results.toString());
-                    events.addAll(Event.fromJsonArray(results));
-                    eventAdapter.notifyDataSetChanged();
-                    Log.i(TAG, "Events: " + events.size());
+                    trails.addAll(Trail.fromJsonArray(results));
+                    trailsAdapter.notifyDataSetChanged();
+                    Log.i(TAG, "Trails: " + trails.size());
                 } catch (JSONException e) {
                     Log.e(TAG, "hit json exception", e);
                 }
@@ -71,4 +68,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }
