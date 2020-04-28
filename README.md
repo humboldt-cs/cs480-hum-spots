@@ -11,7 +11,9 @@ Group Project - README Template
 
 ## Overview
 ### Description
-A hub for tourists, new students, and anyone who may be unfamiliar with the area to find popular sites and activities in the Humboldt area.
+An app desinged to be a hub for tourists, new students, and anyone who may be unfamiliar with the area to find popular sites and activities in the Humboldt area. 
+Current build:
+An app desinged for students to find popular sites/ hiking trails/ events/ school events in the Humboldt area. 
 
 ### App Evaluation
 
