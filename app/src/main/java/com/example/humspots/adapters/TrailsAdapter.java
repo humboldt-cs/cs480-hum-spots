@@ -1,11 +1,13 @@
 package com.example.humspots.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.humspots.R;
+import com.example.humspots.TrailDetails;
 import com.example.humspots.models.Trail;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -54,6 +59,7 @@ public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        RelativeLayout trailContainer;
         ImageView ivTrailImage;
         TextView tvTrailName;
         TextView tvTrailSummary;
@@ -61,17 +67,30 @@ public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder
 
         public ViewHolder(View trailView) {
             super(trailView);
+
+            trailContainer = trailView.findViewById(R.id.trailContainer);
             ivTrailImage = trailView.findViewById(R.id.ivTrailImage);
             tvTrailName = trailView.findViewById(R.id.tvTrailName);
             tvTrailSummary = trailView.findViewById(R.id.tvTrailSummary);
             tvTrailLength = trailView.findViewById(R.id.tvTrailLength);
         }
 
-        public void bind(Trail trail) {
+        public void bind(final Trail trail) {
             tvTrailName.setText(trail.getName());
             tvTrailLength.setText("(" + trail.getLength() + " mi)");
             tvTrailSummary.setText(trail.getSummary());
             Glide.with(context).load(trail.getImageURL()).into(ivTrailImage);
+
+            //register the click listener on the whole container.
+            trailContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //then, navigate to new activity on click.
+                    Intent i = new Intent(context, TrailDetails.class);
+                    i.putExtra("trail", Parcels.wrap(trail));
+                    context.startActivity(i);
+                }
+            });
 
         }
     }

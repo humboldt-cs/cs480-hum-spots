@@ -3,11 +3,13 @@ package com.example.humspots.models;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Parcel
 public class Trail {
     String imageURL;
     String name;
