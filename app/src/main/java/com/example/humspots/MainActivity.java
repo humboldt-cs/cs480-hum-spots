@@ -1,17 +1,22 @@
 package com.example.humspots;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.humspots.adapters.EventAdapter;
 import com.example.humspots.models.Event;
 import com.example.humspots.models.Trail;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String ORGANIZATION_URL = "https://www.eventbriteapi.com/v3/organizations/436148186604/events/?token=FXZ47VT64UDMVS6KNOP4";
     public static final String TAG = "MainActivity";
 
+    private BottomNavigationView bottomNavigationView;
+
     List<Event> events;
 
     @Override
@@ -36,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         RecyclerView rvEvents = findViewById(R.id.rvEvents);
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         events = new ArrayList<>();
         //create the adapter
@@ -68,6 +76,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.d(TAG, "onFailure");
+            }
+        });
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Fragment fragment;
+                switch (menuItem.getItemId()) {
+                    case R.id.action_events:
+                        Toast.makeText(MainActivity.this, "Events Activity", Toast.LENGTH_SHORT).show();
+                        Log.i(TAG, "Events");
+                        break;
+                    case R.id.action_trails:
+                        Toast.makeText(MainActivity.this, "Trails Activity", Toast.LENGTH_SHORT).show();
+                        Log.i(TAG, "Trails");
+                        break;
+                    case R.id.action_map:
+                    default:
+                        Toast.makeText(MainActivity.this, "Map Activity", Toast.LENGTH_SHORT).show();
+                        //Log.i(TAG, "Map");
+                        break;
+                }
+                return true;
             }
         });
     }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_events"
+        android:icon="@android:drawable/ic_menu_day"
+        android:title="Events"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_trails"
+        android:icon="@drawable/ic_directions_walk_black_24dp"
+        android:title="Trails"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_map"
+        android:icon="@drawable/map_view"
+        android:title="Map"
+        app:showAsAction="always" />
+</menu>
