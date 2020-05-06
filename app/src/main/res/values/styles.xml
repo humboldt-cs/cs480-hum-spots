@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
         <!-- Activity with no Title -->
         <style name="ThemeOverlay.MyNoTitleActivity" parent="AppTheme">
@@ -44,7 +45,5 @@
             <item name="android:gravity">center</item>
             <item name="android:textSize">36sp</item>
         </style>
-
-    </style>
 
 </resources>
