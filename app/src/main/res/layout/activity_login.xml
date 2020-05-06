@@ -28,18 +28,20 @@
 
     <TextView
         android:id="@+id/title_tv"
-        android:layout_width="216dp"
+        android:layout_width="287dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/etEmail"
         android:layout_alignLeft="@+id/etEmail"
         android:layout_alignEnd="@+id/etEmail"
         android:layout_alignRight="@+id/etEmail"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="62dp"
-        android:layout_marginLeft="62dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
         android:layout_marginTop="87dp"
-        android:layout_marginEnd="63dp"
-        android:layout_marginRight="63dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
+        android:autoText="false"
+        android:gravity="center"
         android:text="Welcome to HumSpots"
         android:textColor="#000000"
         android:textSize="20sp" />
@@ -97,6 +99,7 @@
         android:shadowColor="#FFFFFF"
         android:textColor="#030303" />
 
+
     <TextView
         android:id="@+id/tvFirebase"
         android:layout_width="wrap_content"
@@ -104,39 +107,43 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="25dp"
         android:text="Integrated With: "
-        android:textColor="#040404" />
-
+        android:textColor="#040404"
+        android:textSize="10sp" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="120dp"
+        android:layout_width="80dp"
         android:layout_height="53dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="146dp"
-        android:layout_marginLeft="146dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="-29dp"
-        android:layout_marginRight="-29dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:layout_toEndOf="@+id/tvFirebase"
         android:layout_toRightOf="@+id/tvFirebase"
         app:srcCompat="@drawable/firebase_lockup_400" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnGoogle"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnCreate"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="85dp"
+        android:layout_marginLeft="85dp"
         android:layout_marginTop="47dp"
+        android:layout_marginEnd="86dp"
+        android:layout_marginRight="86dp"
         android:background="@color/common_google_signin_btn_text_dark_default"
         android:drawableLeft="@drawable/common_google_signin_btn_text_light"
         android:text=" Sign in with google     " />
