@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
-import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -22,12 +21,10 @@ import com.example.humspots.fragments.MapFragment;
 import com.example.humspots.models.Event;
 import com.example.humspots.models.Venue;
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
-import org.w3c.dom.Text;
 
 import okhttp3.Headers;
 
@@ -37,7 +34,6 @@ public class DetailActivity extends AppCompatActivity {
 
     Venue venue;
     JSONArray results;
-    int test;
 
     ImageView ivImage;
     ImageView ivMapTest;

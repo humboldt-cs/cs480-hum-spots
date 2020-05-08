@@ -49,6 +49,7 @@ public class TrailDetails extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(getBaseContext(), "Map loading..", Toast.LENGTH_SHORT).show();
 
+                //send trail information to map fragment to load into map marker for trail head.
                 Bundle bundle = new Bundle();
                 bundle.putString("lat", trail.getLatitude());
                 bundle.putString("long", trail.getLongitude());

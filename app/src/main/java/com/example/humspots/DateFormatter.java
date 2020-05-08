@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * Given a date String of the format given by the Twitter API, returns a display-formatted
@@ -27,8 +26,6 @@ public class DateFormatter {
             Calendar now = Calendar.getInstance();
             Calendar then = Calendar.getInstance();
             then.setTime(format.parse(rawJsonDate));
-            //time = String.valueOf(then.get(Calendar.YEAR)) + " " + then.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US)
-            //  + " " + String.valueOf(then.get(Calendar.DAY_OF_MONTH));
 
             time = dayOfMonth + "-";
 
