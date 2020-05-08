@@ -11,7 +11,9 @@ Group Project - README Template
 
 ## Overview
 ### Description
-A hub for tourists, new students, and anyone who may be unfamiliar with the area to find popular sites and activities in the Humboldt area.
+An app desinged to be a hub for tourists, new students, and anyone who may be unfamiliar with the area to find popular sites and activities in the Humboldt area. 
+Current build:
+An app desinged for students to find popular sites/ hiking trails/ events/ school events in the Humboldt area. 
 
 ### App Evaluation
 
@@ -42,9 +44,9 @@ A hub for tourists, new students, and anyone who may be unfamiliar with the area
 
 * Home Timeline
    * A click on a specific event leads to a detailed view of the event.
-   * ...
-* Humboldt State University Events Timeline
-   * A click on a specific event leads to a detailed view of the event.
+   * A click on the map view in event details page leads to a full map view of the event with a marker on it.
+* Trails/Hikes Timeline
+   * A click on a specific trail/hike leads to a detailed view of that trail.
    * ...
 * Events Map
    * A click on a pinned event within the map view leads to a detailed view of the event.
