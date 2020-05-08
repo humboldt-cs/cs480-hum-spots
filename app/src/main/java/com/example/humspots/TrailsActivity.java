@@ -1,72 +1,52 @@
 package com.example.humspots;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.view.MenuItem;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-import com.codepath.asynchttpclient.AsyncHttpClient;
-import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-import com.example.humspots.adapters.TrailsAdapter;
-import com.example.humspots.models.Trail;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.Headers;
+import com.example.humspots.fragments.EventsFragment;
+import com.example.humspots.fragments.MapFragment;
+import com.example.humspots.fragments.TrailsFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class TrailsActivity extends AppCompatActivity{
 
-    public static final String TRAILS_URL = "https://www.hikingproject.com/data/get-trails?lat=40.875737&lon=-124.078594&maxDistance=25&key=200729737-84ca63f82302306e434390a4a8366855";
-    public static final String TAG = "TrailsActivity";
-
-    List<Trail> trails;
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        RecyclerView rvEvents = findViewById(R.id.rvEvents);
 
-        trails = new ArrayList<>();
-        //create the adapter
-        final TrailsAdapter trailsAdapter = new TrailsAdapter(this, trails);
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
 
-        //set the adapter on the recycler view
-        rvEvents.setAdapter(trailsAdapter);
-
-        //set a layout manager on RV
-        rvEvents.setLayoutManager(new LinearLayoutManager(this));
-
-        AsyncHttpClient client = new AsyncHttpClient();
-
-        client.get(TRAILS_URL, new JsonHttpResponseHandler() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.d(TAG, "onSuccess");
-                JSONObject jsonObject = json.jsonObject;
-                try {
-                    JSONArray results = jsonObject.getJSONArray("trails");
-                    Log.i(TAG, "Results: " + results.toString());
-                    trails.addAll(Trail.fromJsonArray(results));
-                    trailsAdapter.notifyDataSetChanged();
-                    Log.i(TAG, "Trails: " + trails.size());
-                } catch (JSONException e) {
-                    Log.e(TAG, "hit json exception", e);
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Fragment fragment;
+                switch (menuItem.getItemId()) {
+                    case R.id.action_events:
+                        fragment = new EventsFragment();
+                        break;
+                    case R.id.action_trails:
+                        fragment = new TrailsFragment();
+                        break;
+                    case R.id.action_map:
+                    default:
+                        Toast.makeText(TrailsActivity.this, "Map Activity", Toast.LENGTH_SHORT).show();
+                        fragment = new MapFragment();
+                        break;
                 }
-            }
 
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.d(TAG, "onFailure");
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                return true;
             }
         });
     }
-
 }

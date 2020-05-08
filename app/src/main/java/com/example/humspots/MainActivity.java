@@ -3,6 +3,7 @@ package com.example.humspots;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,9 @@ import android.widget.Toast;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.humspots.adapters.EventAdapter;
+import com.example.humspots.fragments.EventsFragment;
+import com.example.humspots.fragments.MapFragment;
+import com.example.humspots.fragments.TrailsFragment;
 import com.example.humspots.models.Event;
 import com.example.humspots.models.Trail;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -29,55 +33,16 @@ import okhttp3.Headers;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String EVENTBRITE_URL = "https://www.eventbriteapi.com/v3/users/me/?token=FXZ47VT64UDMVS6KNOP4";
-    public static final String TEST_URL = "https://www.eventbriteapi.com/v3/events/99084732101/?token=FXZ47VT64UDMVS6KNOP4";
-    public static final String ORGANIZATION_URL = "https://www.eventbriteapi.com/v3/organizations/436148186604/events/?token=FXZ47VT64UDMVS6KNOP4";
-    public static final String TAG = "MainActivity";
-
     private BottomNavigationView bottomNavigationView;
-
-    List<Event> events;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        RecyclerView rvEvents = findViewById(R.id.rvEvents);
+
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+
         bottomNavigationView = findViewById(R.id.bottomNavigation);
-
-        events = new ArrayList<>();
-        //create the adapter
-        final EventAdapter eventAdapter = new EventAdapter(this, events);
-
-        //set the adapter on the recycler view
-        rvEvents.setAdapter(eventAdapter);
-
-        //set a layout manager on RV
-        rvEvents.setLayoutManager(new LinearLayoutManager(this));
-
-        AsyncHttpClient client = new AsyncHttpClient();
-
-        client.get(ORGANIZATION_URL, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.d(TAG, "onSuccess");
-                JSONObject jsonObject = json.jsonObject;
-                try {
-                    JSONArray results = jsonObject.getJSONArray("events");
-                    Log.i(TAG, "Results: " + results.toString());
-                    events.addAll(Event.fromJsonArray(results));
-                    eventAdapter.notifyDataSetChanged();
-                    Log.i(TAG, "Events: " + events.size());
-                } catch (JSONException e) {
-                    Log.e(TAG, "hit json exception", e);
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.d(TAG, "onFailure");
-            }
-        });
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -85,19 +50,19 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 switch (menuItem.getItemId()) {
                     case R.id.action_events:
-                        Toast.makeText(MainActivity.this, "Events Activity", Toast.LENGTH_SHORT).show();
-                        Log.i(TAG, "Events");
+                        fragment = new EventsFragment();
                         break;
                     case R.id.action_trails:
-                        Toast.makeText(MainActivity.this, "Trails Activity", Toast.LENGTH_SHORT).show();
-                        Log.i(TAG, "Trails");
+                        fragment = new TrailsFragment();
                         break;
                     case R.id.action_map:
                     default:
-                        Toast.makeText(MainActivity.this, "Map Activity", Toast.LENGTH_SHORT).show();
-                        //Log.i(TAG, "Map");
+                        Toast.makeText(MainActivity.this, "Map Loading...", Toast.LENGTH_SHORT).show();
+                        fragment = new MapFragment();
                         break;
                 }
+
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
             }
         });

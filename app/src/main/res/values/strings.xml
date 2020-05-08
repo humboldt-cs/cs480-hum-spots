@@ -2,4 +2,7 @@
     <string name="app_name">HumSpots</string>
     <!--//<string name="google_maps_api_key">AIzaSyDllkOvwuCEnI2pET-h8LSvB95SiT2_RLE</string>-->
     <string name="title_activity_maps">Map</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

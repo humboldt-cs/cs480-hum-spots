@@ -1,5 +1,6 @@
 package com.example.humspots.models;
 
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.humspots.DateFormatter;
 
 import org.json.JSONArray;
@@ -17,6 +18,7 @@ public class Event {
     String title;
     String description;
     String summary;
+    String venueId;
 
     //empty constructor needed by the parceler library
     public Event() {}
@@ -27,6 +29,7 @@ public class Event {
         title = jsonObject.getJSONObject("name").getString("text");
         description = jsonObject.getJSONObject("description").getString("text");
         summary = jsonObject.getString("summary");
+        venueId = jsonObject.getString("venue_id");
     }
 
     public static List<Event> fromJsonArray(JSONArray eventJsonArray) throws JSONException {
@@ -35,6 +38,19 @@ public class Event {
         for(int i = 0; i < eventJsonArray.length(); i++) {
             events.add(new Event(eventJsonArray.getJSONObject(i)));
         }
+        return events;
+    }
+
+    public static List<Event> fromJsonObject(String eventJsonObjectStr) throws JSONException {
+        List<Event> events = new ArrayList<>();
+
+        JSONObject object = new JSONObject(eventJsonObjectStr);
+        JSONArray Jarray  = object.getJSONArray("address");
+
+        for(int i = 0; i < Jarray.length(); i++) {
+            events.add(new Event(Jarray.getJSONObject(i)));
+        }
+
         return events;
     }
 
@@ -73,5 +89,9 @@ public class Event {
 
     public String getSummary() {
         return summary;
+    }
+
+    public String getVenueId(){
+        return venueId;
     }
 }

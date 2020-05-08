@@ -2,18 +2,16 @@ package com.example.humspots;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.graphics.Camera;
 import android.os.Bundle;
 
-import com.example.humspots.models.Event;
-import com.example.humspots.models.Trail;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import org.parceler.Parcels;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -39,20 +37,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * installed Google Play services and returned to the app.
      */
 
-    //final Event event = Parcels.unwrap(getIntent().getParcelableExtra("event"));
-    //final Trail trail = Parcels.unwrap(getIntent().getParcelableExtra("trail"));
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
         LatLng Luis = new LatLng(40.89911, -124.08345);
-        //LatLng myTrail = new LatLng(Double.parseDouble(trail.getLatitude()), Double.parseDouble(trail.getLongitude()));
+        LatLng myTrail = new LatLng(0,0);
 
-        mMap.addMarker(new MarkerOptions().position(Luis).title("Luis Home"));
-        //mMap.addMarker(new MarkerOptions().position(myTrail).title(trail.getName()));
+        if(getIntent().getStringExtra("lat") != null) {
+            myTrail = new LatLng(Double.parseDouble(getIntent().getStringExtra("lat")),
+                                        Double.parseDouble(getIntent().getStringExtra("long")));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(Luis));
-
+            mMap.addMarker(new MarkerOptions().position(myTrail).title(getIntent().getStringExtra("name")));
+            CameraPosition trailLocation = CameraPosition.builder().target(myTrail).zoom(18).tilt(15).bearing(0).build();
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(trailLocation));
+        }
+        else {
+            mMap.addMarker((new MarkerOptions().position(Luis).title("Luis")));
+            CameraPosition location = CameraPosition.builder().target(Luis).zoom(18).tilt(15).bearing(0).build();
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(location));
+        }
     }
 }

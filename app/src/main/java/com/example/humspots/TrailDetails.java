@@ -8,8 +8,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
+import com.example.humspots.fragments.MapFragment;
 import com.example.humspots.models.Trail;
 
 import org.parceler.Parcels;
@@ -45,9 +48,17 @@ public class TrailDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getBaseContext(), "Map loading..", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(TrailDetails.this, MapsActivity.class);
-                i.putExtra("trail", Parcels.wrap(trail));
-                TrailDetails.this.startActivity(i);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("lat", trail.getLatitude());
+                bundle.putString("long", trail.getLongitude());
+                bundle.putString("name", trail.getName());
+
+                // set Fragment Arguments
+                Fragment fragment = new MapFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.tFrame, fragment).commit();
             }
         });
     }
