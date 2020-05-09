@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "625473215132",
+    "firebase_url": "https://humspots-4fcf3.firebaseio.com",
+    "project_id": "humspots-4fcf3",
+    "storage_bucket": "humspots-4fcf3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:625473215132:android:deb3befc7ac026953f2b59",
+        "android_client_info": {
+          "package_name": "com.example.humspots"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "625473215132-b0led60khe1hq339avu7ogvu7lnfbm92.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.humspots",
+            "certificate_hash": "157292bb827148f5b4225facb05e6fa10a6af420"
+          }
+        },
+        {
+          "client_id": "625473215132-clp38qjjusan8cak7lvskfrq18hts090.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCWLCz_bypHJlRb_zKtk9amQsH6gq3yjc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "625473215132-clp38qjjusan8cak7lvskfrq18hts090.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
