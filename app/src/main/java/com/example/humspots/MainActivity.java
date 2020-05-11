@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.humspots.fragments.EventsFragment;
 import com.example.humspots.fragments.MapFragment;
+import com.example.humspots.fragments.SettingsFragment;
 import com.example.humspots.fragments.TrailsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_trails:
                         fragment = new TrailsFragment();
+                        break;
+                    case R.id.action_settings:
+                        fragment = new SettingsFragment();
                         break;
                     case R.id.action_events:
                     default:
