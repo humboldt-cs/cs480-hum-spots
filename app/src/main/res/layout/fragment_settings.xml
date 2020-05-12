@@ -13,32 +13,20 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="34dp"
         android:layout_marginTop="41dp"
-        android:text="Settings"
+        android:text="Profile"
         android:textColor="#000000"
         android:textSize="24sp"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="17dp" />
 
     <TextView
-        android:id="@+id/tvProfile"
+        android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvSettingsTitle"
         android:layout_alignStart="@+id/tvSettingsTitle"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="30dp"
-        android:text="Profile: "
-        android:textColor="#040404"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/tvUserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvProfile"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="-20dp"
-        android:layout_toEndOf="@+id/tvProfile"
+        android:layout_marginTop="28dp"
         android:textColor="#020202"
         tools:text="User Name" />
 
@@ -46,10 +34,10 @@
         android:id="@+id/btnSignOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvUserName"
-        android:layout_alignStart="@+id/tvProfile"
+        android:layout_below="@+id/tvSettingsTitle"
+        android:layout_alignStart="@+id/tvUserName"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="83dp"
         android:text="Sign Out" />
 
 </RelativeLayout>
