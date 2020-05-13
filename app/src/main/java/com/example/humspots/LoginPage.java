@@ -25,8 +25,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-
-
 public class LoginPage extends AppCompatActivity {
 
     public static final String TAG = "LoginActivity";
@@ -87,10 +85,7 @@ public class LoginPage extends AppCompatActivity {
                 signIn();
             }
         });
-
     }
-
-
 
     private void updateUI(FirebaseUser user) {
         //hideProgressDialog();

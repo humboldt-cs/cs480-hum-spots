@@ -4,12 +4,12 @@
 
     <item
         android:id="@+id/action_events"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/events"
         android:title="Events"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_trails"
-        android:icon="@drawable/ic_directions_walk_black_24dp"
+        android:icon="@drawable/hikes"
         android:title="Trails"
         app:showAsAction="always" />
     <item

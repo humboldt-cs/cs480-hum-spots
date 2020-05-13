@@ -15,7 +15,7 @@ public class Venue {
     String venueLongitude;
 
     public Venue(JSONObject jsonObject) throws JSONException {
-        venueID = jsonObject.getString("venue_id");
+        venueID = jsonObject.getString("id");
         capacity = jsonObject.getString("capacity");
         venueName = jsonObject.getString("name");
         venueLatitude = jsonObject.getString("latitude");

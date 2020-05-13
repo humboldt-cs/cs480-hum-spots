@@ -26,14 +26,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import okhttp3.Headers;
 
 public class DetailActivity extends AppCompatActivity {
 
     public static final String TAG = "DetailActivity";
 
-    Venue venue;
-    JSONArray results;
+    List<Venue> venue;
+    String results;
+    String venLongitude;
+    String venLatitude;
+    String venName;
 
     ImageView ivImage;
     ImageView ivMapTest;
@@ -65,44 +71,59 @@ public class DetailActivity extends AppCompatActivity {
 
         //get venue info
         final String venueId = event.getVenueId();
-        String requestVenue = String.format("https://www.eventbriteapi.com/v3/venues/%s/?token=FXZ47VT64UDMVS6KNOP4", venueId);
 
-        AsyncHttpClient client = new AsyncHttpClient();
+        if(venueId.equals("null")) {
+            venLatitude = "40.8747";
+            venLongitude = "-124.0789";
+            venName = "Online Event";
+        }
+        else{
+            String requestVenue = String.format("https://www.eventbriteapi.com/v3/venues/%s/?token=FXZ47VT64UDMVS6KNOP4", venueId);
+            venue = new ArrayList<>();
+            AsyncHttpClient client = new AsyncHttpClient();
 
-        client.get(requestVenue, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.d(TAG, "onSuccess");
-                JSONObject jsonObject = json.jsonObject;
-                try {
-                    results = jsonObject.getJSONArray("address");
-                    venue = (Venue) Venue.fromJsonArray(results);
-                    Log.i(TAG, "Results: " + results.toString());
-                } catch (JSONException e) {
-                    Log.e(TAG, "hit json exception", e);
+            client.get(requestVenue, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    Log.d(TAG, "onSuccess");
+                    JSONObject jsonObject = json.jsonObject;
+                    try {
+                        results = "[" + jsonObject.toString() + "]";
+                        JSONArray array = new JSONArray(results);
+                        venue.addAll(Venue.fromJsonArray(array));
+
+                        venLongitude = venue.get(0).getVenueLongitude();
+                        venLatitude = venue.get(0).getVenueLatitude();
+                        venName = venue.get(0).getVenueName();
+
+                        Log.i(TAG, "Results: " + venue.toString());
+                    } catch (JSONException e) {
+                        Log.e(TAG, "hit json exception", e);
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.d(TAG, "onFailure");
-            }
-        });
+                @Override
+                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                    Log.d(TAG, "onFailure");
+                }
+            });
+        }
+
 
         ivMapTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getBaseContext(), "Map loading..", Toast.LENGTH_SHORT).show();
 
-//                Bundle bundle = new Bundle();
-//                bundle.putString("lat", venue.getVenueLatitude());
-//                bundle.putString("long", venue.getVenueLongitude());
-//                bundle.putString("name", venue.getVenueName());
+                Bundle bundle = new Bundle();
+                bundle.putString("lat", venLatitude);
+                bundle.putString("long", venLongitude);
+                bundle.putString("name", venName);
 
                 // set Fragment Arguments
                 Fragment fragment = new MapFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                //fragment.setArguments(bundle);
+                fragment.setArguments(bundle);
                 fragmentManager.beginTransaction().replace(R.id.eFrame, fragment).commit();
             }
         });

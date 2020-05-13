@@ -21,6 +21,7 @@
         android:layout_marginRight="0dp"
         android:background="#6BFFFFFF"
         android:ems="10"
+        android:fontFamily="@font/cabin_sketch"
         android:hint="Password"
         android:inputType="textPassword"
         android:shadowColor="#FFFFFF"
@@ -35,16 +36,17 @@
         android:layout_alignEnd="@+id/etEmail"
         android:layout_alignRight="@+id/etEmail"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="26dp"
         android:layout_marginLeft="28dp"
         android:layout_marginTop="87dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginEnd="26dp"
         android:layout_marginRight="28dp"
         android:autoText="false"
+        android:fontFamily="@font/cabin_sketch"
         android:gravity="center"
         android:text="Welcome to HumSpots"
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="28sp" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -60,6 +62,7 @@
         android:layout_marginTop="34dp"
         android:layout_marginEnd="184dp"
         android:layout_marginRight="184dp"
+        android:fontFamily="@font/cabin_sketch"
         android:text="Login" />
 
     <Button
@@ -76,6 +79,7 @@
         android:layout_marginTop="34dp"
         android:layout_marginEnd="-184dp"
         android:layout_marginRight="-184dp"
+        android:fontFamily="@font/cabin_sketch"
         android:text="Create Account" />
 
     <EditText
@@ -94,6 +98,7 @@
         android:layout_marginRight="35dp"
         android:background="#6AFFFFFF"
         android:ems="10"
+        android:fontFamily="@font/cabin_sketch"
         android:hint="Email"
         android:inputType="textPersonName"
         android:shadowColor="#FFFFFF"
@@ -107,9 +112,10 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="220dp"
+        android:layout_marginStart="222dp"
         android:layout_marginLeft="220dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="26dp"
+        android:fontFamily="@font/cabin_sketch"
         android:text="Integrated With: "
         android:textColor="#040404"
         android:textSize="10sp" />
@@ -121,7 +127,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="6dp"
+        android:layout_marginStart="3dp"
         android:layout_marginLeft="6dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="5dp"
