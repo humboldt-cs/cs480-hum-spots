@@ -6,10 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-        <LinearLayout
-            android:id="@+id/tDetailsLayout"
+
+    <LinearLayout
+        android:id="@+id/tDetailsLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#74A7A7AE"
         android:orientation="vertical"
         tools:context=".TrailDetails">
 
@@ -25,6 +27,8 @@
                 android:id="@+id/ivTrailImage"
                 android:layout_width="191dp"
                 android:layout_height="180dp"
+                android:layout_marginRight="2dp"
+                android:scaleType="fitEnd"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <ImageView
@@ -32,48 +36,48 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:scaleType="fitEnd"
                 app:srcCompat="@drawable/capture" />
 
         </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_margin="4dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvName"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="13dp"
-                    android:layout_marginTop="20dp"
-                    android:text="Trail Name"
-                    android:textSize="26sp" />
-
-                <TextView
-                    android:id="@+id/tvLength"
-                    android:layout_width="75dp"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center_horizontal"
-                    android:text="4.5 mi"
-                    android:textAlignment="center"
-                    android:textSize="18sp" />
-            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_margin="4dp"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvTrailDescription"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_margin="8dp"
-                android:text="This is  a full description of the trail. Some trails may have a longer description than others."
+                android:id="@+id/tvName"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="17dp"
+                android:text="Trail Name"
+                android:textSize="26sp" />
+
+            <TextView
+                android:id="@+id/tvLength"
+                android:layout_width="75dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:text="4.5 mi"
+                android:textAlignment="center"
                 android:textSize="18sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvTrailDescription"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_margin="8dp"
+            android:text="This is  a full description of the trail. Some trails may have a longer description than others."
+            android:textSize="18sp" />
 
 
-
-</LinearLayout>
+    </LinearLayout>
 
 </FrameLayout>

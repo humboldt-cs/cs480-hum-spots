@@ -15,6 +15,9 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.humspots.R;
 import com.example.humspots.TrailDetails;
 import com.example.humspots.models.Trail;
@@ -79,7 +82,14 @@ public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder
             tvTrailName.setText(trail.getName());
             tvTrailLength.setText("(" + trail.getLength() + " mi)");
             tvTrailSummary.setText(trail.getSummary());
-            Glide.with(context).load(trail.getImageURL()).into(ivTrailImage);
+
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.unavailableimage)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .priority(Priority.HIGH);
+            Glide.with(context).load(trail.getImageURL()).apply(options).into(ivTrailImage);
 
             //register the click listener on the whole container.
             trailContainer.setOnClickListener(new View.OnClickListener() {

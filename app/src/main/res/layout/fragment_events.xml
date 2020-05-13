@@ -6,8 +6,9 @@
     tools:context=".fragments.EventsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvEvents"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rvEvents"/>
+        android:background="@drawable/afmfin" />
 
 </RelativeLayout>
