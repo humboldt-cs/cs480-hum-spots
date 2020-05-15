@@ -65,7 +65,7 @@ An app desinged for students to find popular sites/ hiking trails/ events/ schoo
 
 <img src="https://github.com/humboldt-cs/cs480-hum-spots/blob/master/wireframes/Flow%20Navigation.JPG" width=400>
 
-### Walkthrough (unit 10)
+### Walkthrough (unit 14)
 <img src="https://github.com/humboldt-cs/cs480-hum-spots/blob/master/walkthroughunit14.gif" width=400>
 
 ### [BONUS] Digital Wireframes & Mockups
