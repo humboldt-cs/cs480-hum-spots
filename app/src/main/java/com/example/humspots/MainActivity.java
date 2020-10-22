@@ -21,6 +21,8 @@ import com.example.humspots.fragments.TrailsFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private FusedLocationProviderClient client;
+
+    String places_api_key = String.valueOf(R.string.places_api_key);
     String currentLocLat;
     String currentLocLong;
     String test;
@@ -39,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        
+
+
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
         bottomNavigationView = findViewById(R.id.bottomNavigation);
@@ -48,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
         //permission not given.
         if(ActivityCompat.checkSelfPermission(MainActivity.this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            currentLocLong = "-124.0789";
-            currentLocLat = "40.8747";
+            currentLocLong = "-124.08641";
+            currentLocLat = "40.86849";
         }
 
         client.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
@@ -69,11 +76,11 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 switch (menuItem.getItemId()) {
                     case R.id.action_map:
-                        Toast.makeText(MainActivity.this, "Map Loading...", Toast.LENGTH_SHORT).show();
                         Bundle bundle = new Bundle();
                         bundle.putString("lat", currentLocLat);
                         bundle.putString("long", currentLocLong);
                         bundle.putString("name", currentLocName);
+
 
                         fragment = new MapFragment();
                         fragment.setArguments(bundle);
@@ -90,13 +97,13 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
-                Log.i("LOOO", "coordinates: (" + currentLocLat + ", " + currentLocLong + ")");
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
             }
         });
     }
 
+    //request permission for location
     private void requestPermission(){
         ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION}, 1);
     }

@@ -77,4 +77,9 @@ dependencies {
     implementation "androidx.appcompat:appcompat:${appCompatVersion}"
     implementation "com.google.android.material:material:${designSupportVersion}"
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+
+    //fall2020
+    //implement libraries for google places api
+    implementation 'com.google.android.libraries.places:places:1.0.0'
+    implementation 'com.karumi:dexter:5.0.0'
 }

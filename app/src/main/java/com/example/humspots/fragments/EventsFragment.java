@@ -38,6 +38,8 @@ public class EventsFragment extends Fragment {
     public static final String ORGANIZATION_URL = "https://www.eventbriteapi.com/v3/organizations/436148186604/events/?token=FXZ47VT64UDMVS6KNOP4";
     public static final String TAG = "EventsFragment";
 
+    public EventAdapter eventAdapter;
+
     List<Event> events;
 
     public EventsFragment() {
@@ -62,7 +64,7 @@ public class EventsFragment extends Fragment {
         events = new ArrayList<>();
 
         //create the adapter
-        final EventAdapter eventAdapter = new EventAdapter(getContext(), events);
+        eventAdapter = new EventAdapter(getContext(), events);
 
         //set the adapter on the recycler view
         rvEvents.setAdapter(eventAdapter);

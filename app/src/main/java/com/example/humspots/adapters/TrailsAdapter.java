@@ -2,6 +2,8 @@ package com.example.humspots.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -21,9 +24,20 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.humspots.R;
 import com.example.humspots.TrailDetails;
 import com.example.humspots.models.Trail;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.PhotoMetadata;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.FetchPhotoRequest;
+import com.google.android.libraries.places.api.net.FetchPhotoResponse;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
+import com.google.android.libraries.places.api.net.FetchPlaceResponse;
+import com.google.android.libraries.places.api.net.PlacesClient;
 
 import org.parceler.Parcels;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder> {
@@ -80,8 +94,8 @@ public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder
 
         public void bind(final Trail trail) {
             tvTrailName.setText(trail.getName());
-            tvTrailLength.setText("(" + trail.getLength() + " mi)");
-            tvTrailSummary.setText(trail.getSummary());
+            //tvTrailLength.setText("(" + trail.getLength() + " mi)");
+            tvTrailSummary.setText(trail.getReview());
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
@@ -89,7 +103,7 @@ public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder
                     .error(R.drawable.unavailableimage)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .priority(Priority.HIGH);
-            Glide.with(context).load(trail.getImageURL()).apply(options).into(ivTrailImage);
+            Glide.with(context).load(trail.getIcon()).apply(options).into(ivTrailImage);
 
             //register the click listener on the whole container.
             trailContainer.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +115,6 @@ public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder
                     context.startActivity(i);
                 }
             });
-
         }
     }
 }

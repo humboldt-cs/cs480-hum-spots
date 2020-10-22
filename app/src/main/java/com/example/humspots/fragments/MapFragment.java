@@ -63,10 +63,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         mMap = googleMap;
         String name = getArguments().getString("name");
-
+        //String name = null;
         if(name != null){
-            double lat = Double.parseDouble(getArguments().getString("lat"));
-            double longi = Double.parseDouble(getArguments().getString("long"));
+            double lat = getArguments().getDouble("lat");
+            double longi = getArguments().getDouble("long");
             LatLng location = new LatLng(lat, longi);
 
             mMap.addMarker((new MarkerOptions().position(location).title(name)));
@@ -74,6 +74,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(thing));
         }
         else{
+            //default latlng location
             LatLng defaultLocation = new LatLng(40.8747, -124.0789);
             mMap.addMarker((new MarkerOptions().position(defaultLocation).title("No Location Given")));
             CameraPosition thing = CameraPosition.builder().target(defaultLocation).zoom(18).tilt(15).bearing(0).build();
