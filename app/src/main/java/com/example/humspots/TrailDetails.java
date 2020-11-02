@@ -1,5 +1,6 @@
 package com.example.humspots;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -17,16 +18,8 @@ import com.example.humspots.fragments.MapFragment;
 import com.example.humspots.models.Trail;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.libraries.places.api.model.PhotoMetadata;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.net.FetchPhotoRequest;
-import com.google.android.libraries.places.api.net.FetchPhotoResponse;
-import com.google.android.libraries.places.api.net.FetchPlaceRequest;
-import com.google.android.libraries.places.api.net.FetchPlaceResponse;
-import com.google.android.libraries.places.api.net.PlacesClient;
 
 import org.parceler.Parcels;
-
 import java.util.Arrays;
 
 public class TrailDetails extends AppCompatActivity {
@@ -50,7 +43,8 @@ public class TrailDetails extends AppCompatActivity {
 
         final Trail trail = Parcels.unwrap(getIntent().getParcelableExtra("trail"));
 
-        Glide.with(this).load(trail.getIcon()).into(ivTrailImage);
+        //Glide.with(this).load(trail.getIcon()).into(ivTrailImage);
+        ivTrailImage.setImageBitmap(trail.getIcon());
 
         //tvLength.setText(trail.getLength() + " mi");
         tvName.setText(trail.getName());

@@ -8,8 +8,11 @@ import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -18,12 +21,23 @@ import com.example.humspots.fragments.EventsFragment;
 import com.example.humspots.fragments.MapFragment;
 import com.example.humspots.fragments.SettingsFragment;
 import com.example.humspots.fragments.TrailsFragment;
+import com.example.humspots.models.Trail;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.PhotoMetadata;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.FetchPhotoRequest;
+import com.google.android.libraries.places.api.net.FetchPhotoResponse;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
+import com.google.android.libraries.places.api.net.FetchPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import okhttp3.Headers;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -32,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private FusedLocationProviderClient client;
 
-    String places_api_key = String.valueOf(R.string.places_api_key);
+    String TAG = "Main Activity";
+
     String currentLocLat;
     String currentLocLong;
     String test;
@@ -42,9 +57,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        
-
 
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -80,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
                         bundle.putString("lat", currentLocLat);
                         bundle.putString("long", currentLocLong);
                         bundle.putString("name", currentLocName);
-
 
                         fragment = new MapFragment();
                         fragment.setArguments(bundle);

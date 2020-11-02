@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,18 +26,19 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
+import java.util.Collections;
 import java.util.List;
 
 import okhttp3.Headers;
+
+import static com.parse.Parse.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TrailsFragment extends Fragment {
 
-    public static final String TRAILS_URL = "https://www.hikingproject.com/data/get-trails?lat=40.875737&lon=-124.078594&maxDistance=25&key=200729737-84ca63f82302306e434390a4a8366855";
-    public static final String PLACES_URL = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Trails%20near%20me&inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&key=AIzaSyB2SbC24Cm4_D1Dl8qooOLLckDtBa362bM";
-    public static final String NEARBY_URL = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Trail&inputtype=textquery&fields=photos,formatted_address,name,rating&locationbias=circle:5000@40.875719,-124.078547&key=AIzaSyB2SbC24Cm4_D1Dl8qooOLLckDtBa362bM";
     public static final String TEST_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=Trails+in+Humboldt&key=AIzaSyB2SbC24Cm4_D1Dl8qooOLLckDtBa362bM";
     public static final String TAG = "TrailsActivity";
 
@@ -100,5 +102,6 @@ public class TrailsFragment extends Fragment {
                 Log.d(TAG, "onFailure");
             }
         });
+
     }
 }
