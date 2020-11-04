@@ -18,7 +18,8 @@ import com.bumptech.glide.Glide;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.humspots.fragments.MapFragment;
-import com.example.humspots.models.Event;
+//import com.example.humspots.models.Event;
+import com.amplifyframework.datastore.generated.model.Event;
 import com.example.humspots.models.Venue;
 
 import org.json.JSONArray;
@@ -62,7 +63,7 @@ public class DetailActivity extends AppCompatActivity {
 
         final Event event = Parcels.unwrap(getIntent().getParcelableExtra("event"));
 
-        Glide.with(this).load(event.getPosterURL()).into(ivImage);
+        Glide.with(this).load(event.getPosterUrl()).into(ivImage);
 
         tvDay.setText(event.getDayOfMonth());
         tvMonth.setText(event.getMonthOfYear());

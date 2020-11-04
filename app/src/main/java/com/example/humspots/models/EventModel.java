@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Parcel
-public class Event {
+public class EventModel {
     String posterURL;
     String date;
     String title;
@@ -21,9 +21,9 @@ public class Event {
     String venueId;
 
     //empty constructor needed by the parceler library
-    public Event() {}
+    public EventModel() {}
 
-    public Event(JSONObject jsonObject) throws JSONException {
+    public EventModel(JSONObject jsonObject) throws JSONException {
         posterURL = jsonObject.getJSONObject("logo").getString("url");
         date = jsonObject.getJSONObject("start").getString("local");
         title = jsonObject.getJSONObject("name").getString("text");
@@ -32,23 +32,23 @@ public class Event {
         venueId = jsonObject.getString("venue_id");
     }
 
-    public static List<Event> fromJsonArray(JSONArray eventJsonArray) throws JSONException {
-        List<Event> events = new ArrayList<>();
+    public static List<EventModel> fromJsonArray(JSONArray eventJsonArray) throws JSONException {
+        List<EventModel> events = new ArrayList<>();
 
         for(int i = 0; i < eventJsonArray.length(); i++) {
-            events.add(new Event(eventJsonArray.getJSONObject(i)));
+            events.add(new EventModel(eventJsonArray.getJSONObject(i)));
         }
         return events;
     }
 
-    public static List<Event> fromJsonObject(String eventJsonObjectStr) throws JSONException {
-        List<Event> events = new ArrayList<>();
+    public static List<EventModel> fromJsonObject(String eventJsonObjectStr) throws JSONException {
+        List<EventModel> events = new ArrayList<>();
 
         JSONObject object = new JSONObject(eventJsonObjectStr);
         JSONArray Jarray  = object.getJSONArray("address");
 
         for(int i = 0; i < Jarray.length(); i++) {
-            events.add(new Event(Jarray.getJSONObject(i)));
+            events.add(new EventModel(Jarray.getJSONObject(i)));
         }
 
         return events;

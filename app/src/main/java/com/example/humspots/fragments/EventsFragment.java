@@ -13,20 +13,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Scanner;
+
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.humspots.R;
 import com.example.humspots.adapters.EventAdapter;
-import com.example.humspots.models.Event;
+//import com.example.humspots.models.Event;
+import com.amplifyframework.datastore.generated.model.Event;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Headers;
+
+import static com.parse.Parse.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,7 +69,8 @@ public class EventsFragment extends Fragment {
         RecyclerView rvEvents = view.findViewById(R.id.rvEvents);
         //bottomNavigationView = findViewById(R.id.bottomNavigation);
 
-        events = new ArrayList<>();
+         events = new ArrayList<>();
+         //events = new ArrayList<>();
 
         //create the adapter
         final EventAdapter eventAdapter = new EventAdapter(getContext(), events);
@@ -72,7 +83,24 @@ public class EventsFragment extends Fragment {
 
         AsyncHttpClient client = new AsyncHttpClient();
 
-        client.get(ORGANIZATION_URL, new JsonHttpResponseHandler() {
+        try {
+            Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.addPlugin(new AWSDataStorePlugin());
+            Amplify.configure(getApplicationContext());
+
+            Log.i("Amplify", "Initialized Amplify");
+        } catch (AmplifyException e) {
+            Log.e("Amplify", "Could not initialize Amplify", e);
+        }
+
+        Amplify.DataStore.query(Event.class,
+                events-> {
+                    while(events.hasNext()){
+                    }
+                },
+                failure -> Log.e("Amplify", "Could not query DataStore", failure)
+        );
+        /*client.get(ORGANIZATION_URL, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.d(TAG, "onSuccess");
@@ -92,6 +120,6 @@ public class EventsFragment extends Fragment {
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.d(TAG, "onFailure");
             }
-        });
+        });*/
     }
 }

@@ -14,6 +14,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.AWSDataStorePlugin;
+import com.amplifyframework.datastore.generated.model.Event;
 import com.example.humspots.fragments.EventsFragment;
 import com.example.humspots.fragments.MapFragment;
 import com.example.humspots.fragments.SettingsFragment;
@@ -22,6 +27,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.amplifyframework.datastore.generated.model.Event;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -63,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -95,6 +103,17 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        /*Event item = Event.builder()
+                .date("11/03/2020")
+                .description("Build an Android application using Amplify")
+                .posterUrl("")
+                .id("1")
+                .summary("Building a new thing for AWS AppSync")
+                .title("AppSync Non-sense")
+                .venueId("123")
+                .build();
+*/
+
     }
 
     private void requestPermission(){
