@@ -8,8 +8,11 @@ import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -23,11 +26,24 @@ import com.example.humspots.fragments.EventsFragment;
 import com.example.humspots.fragments.MapFragment;
 import com.example.humspots.fragments.SettingsFragment;
 import com.example.humspots.fragments.TrailsFragment;
+import com.example.humspots.models.Trail;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.PhotoMetadata;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.FetchPhotoRequest;
+import com.google.android.libraries.places.api.net.FetchPhotoResponse;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
+import com.google.android.libraries.places.api.net.FetchPlaceResponse;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.amplifyframework.datastore.generated.model.Event;
+
+import okhttp3.Headers;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -35,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private FusedLocationProviderClient client;
+
+    String TAG = "Main Activity";
+
     String currentLocLat;
     String currentLocLong;
     String test;
@@ -54,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
 
         //permission not given.
         if(ActivityCompat.checkSelfPermission(MainActivity.this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            currentLocLong = "-124.0789";
-            currentLocLat = "40.8747";
+            currentLocLong = "-124.08641";
+            currentLocLat = "40.86849";
         }
 
         client.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
@@ -77,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 switch (menuItem.getItemId()) {
                     case R.id.action_map:
-                        Toast.makeText(MainActivity.this, "Map Loading...", Toast.LENGTH_SHORT).show();
                         Bundle bundle = new Bundle();
                         bundle.putString("lat", currentLocLat);
                         bundle.putString("long", currentLocLong);
@@ -98,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
-                Log.i("LOOO", "coordinates: (" + currentLocLat + ", " + currentLocLong + ")");
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
             }
@@ -116,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //request permission for location
     private void requestPermission(){
         ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION}, 1);
     }

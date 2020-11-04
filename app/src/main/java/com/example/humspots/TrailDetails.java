@@ -1,12 +1,14 @@
 package com.example.humspots;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -14,8 +16,11 @@ import androidx.fragment.app.FragmentManager;
 import com.bumptech.glide.Glide;
 import com.example.humspots.fragments.MapFragment;
 import com.example.humspots.models.Trail;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.parceler.Parcels;
+import java.util.Arrays;
 
 public class TrailDetails extends AppCompatActivity {
 
@@ -38,11 +43,12 @@ public class TrailDetails extends AppCompatActivity {
 
         final Trail trail = Parcels.unwrap(getIntent().getParcelableExtra("trail"));
 
-        Glide.with(this).load(trail.getImageURL()).into(ivTrailImage);
+        //Glide.with(this).load(trail.getIcon()).into(ivTrailImage);
+        ivTrailImage.setImageBitmap(trail.getIcon());
 
-        tvLength.setText(trail.getLength() + " mi");
+        //tvLength.setText(trail.getLength() + " mi");
         tvName.setText(trail.getName());
-        tvTrailDescription.setText(trail.getSummary());
+        //tvTrailDescription.setText(trail.getReview());
 
         ivTrailMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,8 +57,8 @@ public class TrailDetails extends AppCompatActivity {
 
                 //send trail information to map fragment to load into map marker for trail head.
                 Bundle bundle = new Bundle();
-                bundle.putString("lat", trail.getLatitude());
-                bundle.putString("long", trail.getLongitude());
+                bundle.putDouble("lat", trail.getPlace_lat());
+                bundle.putDouble("long", trail.getPlace_long());
                 bundle.putString("name", trail.getName());
 
                 // set Fragment Arguments

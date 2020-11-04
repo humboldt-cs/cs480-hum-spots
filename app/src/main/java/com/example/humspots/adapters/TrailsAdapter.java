@@ -2,13 +2,16 @@ package com.example.humspots.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -21,13 +24,30 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.humspots.R;
 import com.example.humspots.TrailDetails;
 import com.example.humspots.models.Trail;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.PhotoMetadata;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.FetchPhotoRequest;
+import com.google.android.libraries.places.api.net.FetchPhotoResponse;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
+import com.google.android.libraries.places.api.net.FetchPlaceResponse;
+import com.google.android.libraries.places.api.net.PlacesClient;
 
 import org.parceler.Parcels;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder> {
+import static com.parse.Parse.getApplicationContext;
 
+public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder> {
+    String TAG = "TrailsAdapter";
     Context context;
 
     List<Trail> trails;
@@ -79,29 +99,77 @@ public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder
         }
 
         public void bind(final Trail trail) {
-            tvTrailName.setText(trail.getName());
-            tvTrailLength.setText("(" + trail.getLength() + " mi)");
-            tvTrailSummary.setText(trail.getSummary());
+            if (!Places.isInitialized()) {
+                //initialize places
+                Places.initialize(getApplicationContext(), getApplicationContext().getResources().getString(R.string.places_api_key));
+            }
 
-            RequestOptions options = new RequestOptions()
-                    .centerCrop()
-                    .placeholder(R.drawable.loading)
-                    .error(R.drawable.unavailableimage)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .priority(Priority.HIGH);
-            Glide.with(context).load(trail.getImageURL()).apply(options).into(ivTrailImage);
+            //create new Places Client instance
+            final PlacesClient placesClient = Places.createClient(getApplicationContext());
 
-            //register the click listener on the whole container.
-            trailContainer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //then, navigate to new activity on click.
-                    Intent i = new Intent(context, TrailDetails.class);
-                    i.putExtra("trail", Parcels.wrap(trail));
-                    context.startActivity(i);
-                }
-            });
+            //specify fields, Requests for photos must always have the PHOTO_METADATAS field.
+            final List<Place.Field> fields = Collections.singletonList(Place.Field.PHOTO_METADATAS);
 
+            for (int i = 0; i < trails.size(); i++) {
+                //Get a place object (this uses fetchPlace(), but can be replaced by findCurrentPlace())
+                final FetchPlaceRequest placeRequest = FetchPlaceRequest.newInstance(trails.get(i).getPlace_id(), fields);
+
+                int finalI = i;
+                placesClient.fetchPlace(placeRequest).addOnSuccessListener((response) -> {
+                    final Place place = response.getPlace();
+                    //get photo metadata.
+                    final List<PhotoMetadata> metadata = place.getPhotoMetadatas();
+                    if (metadata == null || metadata.isEmpty()) {
+                        Log.w(TAG, "No photo metadata.");
+                        return;
+                    }
+
+                    final PhotoMetadata photoMetadata = metadata.get(0);
+
+                    //get the attribution text
+                    final String attributions = photoMetadata.getAttributions();
+
+                    //create a FetchPhotoRequest
+                    final FetchPhotoRequest photoRequest = FetchPhotoRequest.builder(photoMetadata)
+                            .setMaxWidth(400)
+                            .setMaxHeight(250)
+                            .build();
+                    placesClient.fetchPhoto(photoRequest).addOnSuccessListener((fetchPhotoResponse) -> {
+                        Bitmap bitmap = fetchPhotoResponse.getBitmap();
+                        //ivTrailImage.setImageBitmap(bitmap);
+                        trails.get(finalI).setIcon(bitmap);
+                    }).addOnFailureListener((exception) -> {
+                        if (exception instanceof ApiException) {
+                            final ApiException apiException = (ApiException) exception;
+                            Log.e(TAG, "Place not found:" + exception.getMessage());
+                            final int statusCode = apiException.getStatusCode();
+                        }
+                    });
+                });
+            }
+                tvTrailName.setText(trail.getName());
+                //tvTrailLength.setText("(" + trail.getLength() + " mi)");
+                //tvTrailSummary.setText(trail.getReview());
+
+                RequestOptions options = new RequestOptions()
+                        .centerCrop()
+                        .placeholder(R.drawable.loading)
+                        .error(R.drawable.unavailableimage)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .priority(Priority.HIGH);
+                //Glide.with(context).load(trail.getIcon()).apply(options).into(ivTrailImage);
+                ivTrailImage.setImageBitmap(trail.getIcon());
+
+                //register the click listener on the whole container.
+                trailContainer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //navigate to new activity on click.
+                        Intent i = new Intent(context, TrailDetails.class);
+                        i.putExtra("trail", Parcels.wrap(trail));
+                        context.startActivity(i);
+                    }
+                });
         }
     }
 }
