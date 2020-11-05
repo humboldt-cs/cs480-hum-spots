@@ -98,6 +98,29 @@ public class EventsFragment extends Fragment {
         Amplify.DataStore.query(Event.class,
                 events-> {
                     while(events.hasNext()){
+                        Event event = events.next();
+                        Log.i("Amplify", "==== Event ====");
+                        if (event.getTitle() != null) {
+                            Log.i("Tutorial", "Title: " + event.getTitle());
+                        }
+                        if (event.getId() != null) {
+                            Log.i("Tutorial", "Id: " + event.getId());
+                        }
+                        if (event.getDescription() != null) {
+                            Log.i("Tutorial", "Description: " + event.getDescription());
+                        }
+                        if (event.getPosterUrl() != null) {
+                            Log.i("Tutorial", "PosterUrl: " + event.getPosterUrl());
+                        }
+                        if (event.getSummary() != null) {
+                            Log.i("Tutorial", "Summary: " + event.getSummary());
+                        }
+                        if (event.getVenueId() != null) {
+                            Log.i("Tutorial", "VenueId: " + event.getVenueId());
+                        }
+                        if (event.getDate() != null) {
+                            Log.i("Tutorial", "Date: " + event.getDate());
+                        }
                     }
                 },
                 failure -> Log.e("Amplify", "Could not query DataStore", failure)

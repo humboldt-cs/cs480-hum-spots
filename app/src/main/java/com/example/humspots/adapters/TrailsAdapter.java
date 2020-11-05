@@ -99,7 +99,7 @@ public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder
         }
 
         public void bind(final Trail trail) {
-            if (!Places.isInitialized()) {
+            if (!Place.isInitialized()) {
                 //initialize places
                 Places.initialize(getApplicationContext(), getApplicationContext().getResources().getString(R.string.places_api_key));
             }
