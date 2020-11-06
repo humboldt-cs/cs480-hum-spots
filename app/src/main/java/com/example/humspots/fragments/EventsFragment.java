@@ -19,6 +19,7 @@ import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
+import com.amplifyframework.datastore.syncengine.MutationQueue;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.humspots.R;
@@ -95,7 +96,23 @@ public class EventsFragment extends Fragment {
             Log.e("Amplify", "Could not initialize Amplify", e);
         }
 
-        Amplify.DataStore.query(Event.class,
+        Event item = Event.builder()
+                .title("This is a test.")
+                .description("This is a description.")
+                .date("11/06/2020")
+                .posterUrl("https://www.himgs.com/imagenes/hello/social/hello-fb-logo.png")
+                .summary("This is a summary.")
+                .venueId("0023425")
+                .id("0001")
+                .build();
+
+        Amplify.DataStore.save(
+                item,
+                success -> Log.i("Tutorial", "Saved item: " + success.item().getTitle()),
+                error -> Log.e("Tutorial", "Could not save item to DataStore", error)
+        );
+
+        /*Amplify.DataStore.query(Event.class,
                 events-> {
                     while(events.hasNext()){
                         Event event = events.next();
@@ -103,9 +120,6 @@ public class EventsFragment extends Fragment {
                         if (event.getTitle() != null) {
                             Log.i("Amplify", "Title: " + event.getTitle());
                         }
-                        /*if (event.getId() != null) {
-                            Log.i("Amplify", "Id: " + event.getId());
-                        }*/
                         if (event.getDescription() != null) {
                             Log.i("Amplify", "Description: " + event.getDescription());
                         }
@@ -124,7 +138,7 @@ public class EventsFragment extends Fragment {
                     }
                 },
                 failure -> Log.e("Amplify", "Could not query DataStore", failure)
-        );
+        );*/
         /*client.get(ORGANIZATION_URL, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
