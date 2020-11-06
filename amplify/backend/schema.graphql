@@ -4,7 +4,7 @@ schema {
     subscription: Subscription
 }
 
-type Event {
+type Event{
     date: String
     description: String
     id: ID!
