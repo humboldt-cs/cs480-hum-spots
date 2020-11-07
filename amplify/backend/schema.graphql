@@ -3,6 +3,7 @@ schema {
     mutation: Mutation
     subscription: Subscription
 }
+directive @aws_subscribe(mutations: [String!]!) on FIELD_DEFINITION
 
 type Event{
     date: String
@@ -37,6 +38,7 @@ type Subscription {
 }
 
 input CreateEventInput {
+    id: ID!
     date: String
     description: String
     posterURL: String
