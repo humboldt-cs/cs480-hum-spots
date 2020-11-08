@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.datastore.generated.model.Event;
 import com.bumptech.glide.Glide;
 import com.example.humspots.DetailActivity;
 import com.example.humspots.R;
-import com.example.humspots.models.Event;
+import com.example.humspots.models.EventModel;
 
 import org.parceler.Parcels;
 
@@ -82,7 +82,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             tvEventTitle.setText(event.getTitle());
             tvSummary.setText(event.getSummary());
 
-            Glide.with(context).load(event.getPosterURL()).into(ivEventImage);
+            Glide.with(context).load(event.getPosterurl()).into(ivEventImage);
 
             //register the click listener on the whole container.
             container.setOnClickListener(new View.OnClickListener() {
