@@ -47,7 +47,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         //get the event at the given position
         Event event = events.get(position);
         //bind the event data into the view holder
-        holder.bind(event);
+        //holder.bind(event);
     }
 
     //returns the total number of items in the list
@@ -76,7 +76,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             ivEventImage = itemView.findViewById(R.id.ivEventImage);
         }
 
-        public void bind(final Event event) {
+        public void bind(final EventModel event) {
             tvDay.setText(event.getDayOfMonth());
             tvMonth.setText(event.getMonthOfYear());
             tvEventTitle.setText(event.getTitle());
@@ -95,5 +95,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
                 }
             });
         }
+
     }
 }

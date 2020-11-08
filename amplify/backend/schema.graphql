@@ -1,0 +1,127 @@
+schema {
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
+}
+directive @aws_subscribe(mutations: [String!]!) on FIELD_DEFINITION
+
+type Event{
+    date: String
+    description: String
+    id: ID!
+    posterURL: String
+    summary: String
+    title: String
+    venueId: String
+}
+
+type EventConnection {
+    items: [Event]
+    nextToken: String
+}
+
+type Mutation {
+    createEvent(input: CreateEventInput!): Event
+    deleteEvent(input: DeleteEventInput!): Event
+    updateEvent(input: UpdateEventInput!): Event
+}
+
+type Query {
+    getEvent(id: ID!): Event
+    listEvents(filter: TableEventFilterInput, limit: Int, nextToken: String): EventConnection
+}
+
+type Subscription {
+    onCreateEvent(date: String, description: String, id: ID, summary: String, title: String): Event @aws_subscribe(mutations : ["createEvent"])
+    onDeleteEvent(date: String, description: String, id: ID, summary: String, title: String): Event @aws_subscribe(mutations : ["deleteEvent"])
+    onUpdateEvent(date: String, description: String, id: ID, summary: String, title: String): Event @aws_subscribe(mutations : ["updateEvent"])
+}
+
+input CreateEventInput {
+    id: ID!
+    date: String
+    description: String
+    posterURL: String
+    summary: String
+    title: String
+    venueId: String
+}
+
+input DeleteEventInput {
+    id: ID!
+}
+
+input TableBooleanFilterInput {
+    eq: Boolean
+    ne: Boolean
+}
+
+input TableEventFilterInput {
+    date: TableStringFilterInput
+    description: TableStringFilterInput
+    id: TableIDFilterInput
+    posterURL: TableStringFilterInput
+    summary: TableStringFilterInput
+    title: TableStringFilterInput
+    venueId: TableStringFilterInput
+}
+
+input TableFloatFilterInput {
+    between: [Float]
+    contains: Float
+    eq: Float
+    ge: Float
+    gt: Float
+    le: Float
+    lt: Float
+    ne: Float
+    notContains: Float
+}
+
+input TableIDFilterInput {
+    beginsWith: ID
+    between: [ID]
+    contains: ID
+    eq: ID
+    ge: ID
+    gt: ID
+    le: ID
+    lt: ID
+    ne: ID
+    notContains: ID
+}
+
+input TableIntFilterInput {
+    between: [Int]
+    contains: Int
+    eq: Int
+    ge: Int
+    gt: Int
+    le: Int
+    lt: Int
+    ne: Int
+    notContains: Int
+}
+
+input TableStringFilterInput {
+    beginsWith: String
+    between: [String]
+    contains: String
+    eq: String
+    ge: String
+    gt: String
+    le: String
+    lt: String
+    ne: String
+    notContains: String
+}
+
+input UpdateEventInput {
+    date: String
+    description: String
+    id: ID!
+    posterURL: String
+    summary: String
+    title: String
+    venueId: String
+}
