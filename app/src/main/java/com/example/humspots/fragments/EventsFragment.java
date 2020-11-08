@@ -91,7 +91,7 @@ public class EventsFragment extends Fragment {
             Log.e("Amplify", "Could not initialize Amplify", e);
         }
 
-        getEvent("d38296e7-de50-4c04-a54c-23e5e3fee775");
+     /*
         //Test Input into AppSync API
 
         Event event = Event.builder()
@@ -130,9 +130,9 @@ public class EventsFragment extends Fragment {
                 response -> Log.i("Amplify", "Added Todo with id: " + response.getData().getId()),
                 error -> Log.e("Amplify", "Create failed", error)
         );
-
-        getEvents();
-
+        //getEvent("d38296e7-de50-4c04-a54c-23e5e3fee775");
+        //getEvents();
+/*
         /*client.get(ORGANIZATION_URL, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
