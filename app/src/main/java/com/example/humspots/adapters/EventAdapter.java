@@ -76,7 +76,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             ivEventImage = itemView.findViewById(R.id.ivEventImage);
         }
 
-        public void bind(final EventModel event) {
+        public void bind(final Event event) {
             tvDay.setText(event.getDayOfMonth());
             tvMonth.setText(event.getMonthOfYear());
             tvEventTitle.setText(event.getTitle());
