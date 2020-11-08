@@ -4,10 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.humspots.fragments.MapFragment;
-import com.example.humspots.models.Event;
+import com.example.humspots.models.EventModel;
 import com.example.humspots.models.Venue;
 
 import org.json.JSONArray;
@@ -60,7 +57,7 @@ public class DetailActivity extends AppCompatActivity {
         tvTitle = findViewById(R.id.tvTitle);
         tvDescription = findViewById(R.id.tvDescription);
 
-        final Event event = Parcels.unwrap(getIntent().getParcelableExtra("event"));
+        final EventModel event = Parcels.unwrap(getIntent().getParcelableExtra("event"));
 
         Glide.with(this).load(event.getPosterURL()).into(ivImage);
 
