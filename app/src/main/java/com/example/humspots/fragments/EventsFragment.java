@@ -1,10 +1,13 @@
 package com.example.humspots.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +26,6 @@ import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.humspots.R;
 import com.example.humspots.adapters.EventAdapter;
-import com.example.humspots.models.EventModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,7 +49,6 @@ public class EventsFragment extends Fragment {
     public static final String TAG = "EventsFragment";
 
     public EventAdapter eventAdapter;
-
     List<Event> events;
 
     public EventsFragment() {
@@ -66,19 +67,24 @@ public class EventsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView rvEvents = view.findViewById(R.id.rvEvents);
+
+
+        RecyclerView rvEvents = (RecyclerView) view.findViewById(R.id.rvEvents);
         //bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         events = new ArrayList<>();
 
+
         //create the adapter
         eventAdapter = new EventAdapter(getContext(), events);
+
+        //set a layout manager on RV
+        rvEvents.setLayoutManager(new LinearLayoutManager(getContext()));
 
         //set the adapter on the recycler view
         rvEvents.setAdapter(eventAdapter);
 
-        //set a layout manager on RV
-        rvEvents.setLayoutManager(new LinearLayoutManager(getContext()));
+
 
         try {
             Amplify.addPlugin(new AWSApiPlugin());
@@ -88,6 +94,27 @@ public class EventsFragment extends Fragment {
         } catch (AmplifyException e) {
             Log.e("Amplify", "Could not initialize Amplify", e);
         }
+
+        Amplify.API.query(
+                ModelQuery.list(Event.class),
+                response -> {
+                    for (Event event : response.getData()) {
+                        Log.i("Amplify", event.getTitle());
+                        Log.i("Amplify", event.getDayOfMonth());
+                        Log.i("Amplify", event.getDate());
+                        try {
+                            events.add(event);
+                            eventAdapter.notifyDataSetChanged();
+                            Log.i(TAG, "Events: " + events.size());
+                        } catch (Exception e) {
+                            Log.e(TAG, "Events: ", e);
+                        }
+                    }
+                },
+                error -> Log.e("Amplify", "Query failure", error)
+        );
+
+
 /*
         Event event6 = Event.builder()
                 .title("Title")
@@ -170,24 +197,7 @@ public class EventsFragment extends Fragment {
         );
         */
         //getEvents(events);
-        Amplify.API.query(
-                ModelQuery.list(Event.class),
-                response -> {
-                    for (Event event : response.getData()) {
-                        Log.i("Amplify", event.getTitle());
-                        Log.i("Amplify", event.getDayOfMonth());
-                        Log.i("Amplify", event.getDate());
-                        try {
-                            events.add(event);
-                            eventAdapter.notifyDataSetChanged();
-                            Log.i(TAG, "Events: " + events.size());
-                        } catch (Exception e) {
-                            Log.e(TAG, "EventsAdapter exception", e);
-                        }
-                    }
-                },
-                error -> Log.e("Amplify", "Query failure", error)
-        );
+
 
         /*AsyncHttpClient client = new AsyncHttpClient();
 
