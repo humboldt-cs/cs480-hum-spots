@@ -34,10 +34,10 @@
 
     <TextView
         android:id="@+id/tvEventTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="220dp"
+        android:layout_height="32dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="25dp"
         android:layout_toStartOf="@+id/ivEventImage"
@@ -61,13 +61,13 @@
 
     <TextView
         android:id="@+id/tvMonth"
-        android:layout_width="wrap_content"
+        android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvDay"
         android:layout_alignStart="@+id/tvDay"
         android:layout_marginStart="-3dp"
         android:layout_marginTop="1dp"
-        android:layout_marginEnd="-9dp"
+        android:layout_marginEnd="-19dp"
         android:layout_toStartOf="@+id/tvEventTitle"
         android:text="APR"
         android:textSize="14sp" />
