@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
@@ -39,7 +40,7 @@ import okhttp3.Headers;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
 
     private BottomNavigationView bottomNavigationView;
     private FusedLocationProviderClient client;
@@ -112,16 +113,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        /*Event item = Event.builder()
-                .date("11/03/2020")
-                .description("Build an Android application using Amplify")
-                .posterUrl("")
-                .id("1")
-                .summary("Building a new thing for AWS AppSync")
-                .title("AppSync Non-sense")
-                .venueId("123")
-                .build();
-*/
 
     }
 

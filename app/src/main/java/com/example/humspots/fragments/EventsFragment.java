@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Event;
@@ -24,20 +25,20 @@ import com.example.humspots.adapters.EventAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.amazonaws.mobile.auth.core.internal.util.ThreadUtils.runOnUiThread;
+import static com.google.common.collect.ComparisonChain.start;
 import static com.parse.Parse.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
  */
+
+
 public class EventsFragment extends Fragment {
 
-    public static final String EVENTBRITE_URL = "https://www.eventbriteapi.com/v3/users/me/?token=FXZ47VT64UDMVS6KNOP4";
-    public static final String HSU_URL = "https://25livepub.collegenet.com/calendars/student-project-humboldt-app.json";
-    public static final String ORGANIZATION_URL = "https://www.eventbriteapi.com/v3/organizations/436148186604/events/?token=FXZ47VT64UDMVS6KNOP4";
     public static final String TAG = "EventsFragment";
 
     EventAdapter eventAdapter;
-
     List<Event> events;
     RecyclerView rvEvents;
 
@@ -46,9 +47,14 @@ public class EventsFragment extends Fragment {
     }
 
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        events = new ArrayList<>();
+        //create the adapter
+        eventAdapter = new EventAdapter(getContext(), events);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_events, container, false);
     }
@@ -58,22 +64,20 @@ public class EventsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rvEvents = view.findViewById(R.id.rvEvents);
-        //bottomNavigationView = findViewById(R.id.bottomNavigation);
-
-        events = new ArrayList<>();
-
-        //create the adapter
-        eventAdapter = new EventAdapter(this.getContext(), events);
-
         //set a layout manager on RV
-        rvEvents.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        rvEvents.setLayoutManager(new LinearLayoutManager(getContext()));
 
         //set the adapter on the recycler view
         rvEvents.setAdapter(eventAdapter);
+
         amplifyAndSetAdapter();
+        //for some reason the code only works with both notifyDataSetChanged (other is in the other thread)
+        eventAdapter.notifyDataSetChanged();
 
+    }
 
-        /*Event todo = Event.builder().eventTitle("My todo")
+    private void addEventToAWS() {
+        Event todo = Event.builder().eventTitle("My todo")
                 .eventDate("11/21/20")
                 .eventTime("11:30:00")
                 .extraInfo("AHHHHHHHHHHHHHHHHH")
@@ -88,7 +92,7 @@ public class EventsFragment extends Fragment {
                 ModelMutation.create(todo),
                 response -> Log.i(TAG, "Added Todo with id: " + response.getData().getId()),
                 error -> Log.e(TAG, "Create failed", error)
-        );*/
+        );
     }
 
     private void amplifyAndSetAdapter() {
@@ -109,18 +113,39 @@ public class EventsFragment extends Fragment {
     }
 
     private void amplifyQuery() {
+
+
         Amplify.API.query(
                 ModelQuery.list(Event.class),
                 response -> {
                     for (Event event : response.getData()) {
-                        Log.i("Amplify", event.getEventTitle() + " " + event.getEventDate() + " " + event.getEventTime() + " " + event.getCategory()
-                                + " " + event.getPostUrl() + " " + event.getExtraInfo() + " " + event.getVenue() + " " + event.getTemplate());
+                        Log.i("Amplify", "Title: " + event.getEventTitle() + " Date: " + event.getEventDate() + " Time: " + event.getEventTime()
+                                + " PostURL: " + event.getPostUrl() + " ExtraInfo: " + event.getExtraInfo() + " Venue: " + event.getVenue() + " Template: " + event.getTemplate());
                         addEvents(event);
                     }
+                    Thread thread = new Thread(){
+                        @Override
+                        public void run() {
+                            try {
+                                synchronized (this) {
+                                    wait(100);
+
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            eventAdapter.notifyDataSetChanged();
+                                        }
+                                    });
+
+                                }
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }};
+                    };
+                    thread.start();
                 },
                 error -> Log.e("Amplify", "Query failure", error)
         );
-        eventAdapter.notifyDataSetChanged();
     }
 
     private void addEvents(Event event) {
@@ -131,4 +156,5 @@ public class EventsFragment extends Fragment {
             Log.e(TAG, "Events: ", e);
         }
     }
+
 }

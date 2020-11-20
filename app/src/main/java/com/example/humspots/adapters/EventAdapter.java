@@ -46,7 +46,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         //get the event at the given position
         Event event = events.get(position);
         //bind the event data into the view holder
-        holder.bind(event);
+        if(event.getEventTitle() != "" && event.getId() != "")
+            holder.bind(event);
     }
 
     //returns the total number of items in the list
