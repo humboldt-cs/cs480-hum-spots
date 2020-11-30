@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
-//import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Event;
@@ -39,7 +39,7 @@ public class EventsFragment extends Fragment {
     public static final String TAG = "EventsFragment";
 
     EventAdapter eventAdapter;
-    List<Event> events = new ArrayList<>();;
+    List<Event> events;
     RecyclerView rvEvents;
 
     public EventsFragment() {
@@ -52,8 +52,9 @@ public class EventsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //events = new ArrayList<>();
-
+        events = new ArrayList<>();
+        //create the adapter
+        eventAdapter = new EventAdapter(getContext(), events);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_events, container, false);
     }
@@ -64,18 +65,34 @@ public class EventsFragment extends Fragment {
 
         rvEvents = view.findViewById(R.id.rvEvents);
         //set a layout manager on RV
-        rvEvents.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        //create the adapter
-        eventAdapter = new EventAdapter(this.getContext(), events);
+        rvEvents.setLayoutManager(new LinearLayoutManager(getContext()));
 
         //set the adapter on the recycler view
         rvEvents.setAdapter(eventAdapter);
 
         amplifyAndSetAdapter();
-
         //for some reason the code only works with both notifyDataSetChanged (other is in the other thread)
         eventAdapter.notifyDataSetChanged();
 
+    }
+
+    private void addEventToAWS() {
+        Event todo = Event.builder().eventTitle("My todo")
+                .eventDate("11/21/20")
+                .eventTime("11:30:00")
+                .extraInfo("AHHHHHHHHHHHHHHHHH")
+                .category("temp")
+                .description("this is a description")
+                .template("Lost Coast")
+                .postUrl("https://docs.amplify.aws/lib/graphqlapi/mutate-data/q/platform/android")
+                .venue("McDonalds")
+                .build();
+
+        Amplify.API.mutate(
+                ModelMutation.create(todo),
+                response -> Log.i(TAG, "Added Todo with id: " + response.getData().getId()),
+                error -> Log.e(TAG, "Create failed", error)
+        );
     }
 
     private void amplifyAndSetAdapter() {
@@ -100,17 +117,27 @@ public class EventsFragment extends Fragment {
                 ModelQuery.list(Event.class),
                 response -> {
                     for (Event event : response.getData()) {
-                        Log.i(TAG, "Title: " + event.getEventTitle() + " Date: " + event.getEventDate() + " Time: " + event.getEventTime()
+                        Log.i("Amplify", "Title: " + event.getEventTitle() + " Date: " + event.getEventDate() + " Time: " + event.getEventTime()
                                 + " PostURL: " + event.getPostUrl() + " ExtraInfo: " + event.getExtraInfo() + " Venue: " + event.getVenue() + " Template: " + event.getTemplate());
 
-                        addEvents(event);
+                        //addEvents(event);
+                        if(event == null){
+                            continue;
+                        }
+                        try {
+                            events.add(event);
+                            Log.i(TAG, "Events: " + events.size());
+                        } catch (Exception e) {
+                            Log.e(TAG, "Events: ", e);
+                        }
                     }
+                    //Used to seperate the ui using a wait function to add the proper time delay so that an error isnt thrown
                     Thread thread = new Thread(){
                         @Override
                         public void run() {
                             try {
                                 synchronized (this) {
-                                    wait(100);
+                                    wait(500);
 
                                     runOnUiThread(new Runnable() {
                                         @Override
@@ -126,7 +153,7 @@ public class EventsFragment extends Fragment {
                     };
                     thread.start();
                 },
-                error -> Log.e(TAG, "Query failure", error)
+                error -> Log.e("Amplify", "Query failure", error)
         );
     }
 
