@@ -67,11 +67,16 @@ public class DetailActivity extends AppCompatActivity {
         String day = bundle.getString("Date").substring(5,7);
         String month = bundle.getString("Date").substring(0,3);
 
+        String extraInfo = (bundle.getString("ExtraInfo") == "" ||
+                bundle.getString("ExtraInfo") == " "||
+                bundle.getString("ExtraInfo") == null ||
+                bundle.getString("ExtraInfo").isEmpty()) ? "" : "\nContact Info:\n" + bundle.getString("ExtraInfo");
+
         tvDay.setText(day);
         tvMonth.setText(month);
         tvTitle.setText(bundle.getString("Title"));
         tvDescription.setText(bundle.getString("Description"));
-        tvLinks.setText(bundle.getString("ExtraInfo"));
+        tvLinks.setText(bundle.getString("PostURL") + "\n" + extraInfo);
 /*
         //get venue info
         final String venueId = event.getVenueId();

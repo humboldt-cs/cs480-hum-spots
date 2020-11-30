@@ -96,6 +96,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
                     i.putExtra("Date", event.getEventDate());
                     i.putExtra("Description", event.getDescription());
                     i.putExtra("ExtraInfo", event.getExtraInfo());
+                    i.putExtra("PostURL", event.getPostUrl());
                     i.putExtra("Venue", event.getVenue());
                     context.startActivity(i);
                 }
