@@ -90,7 +90,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
                 public void onClick(View v) {
                     //then, navigate to new activity on click.
                     Intent i = new Intent(context, DetailActivity.class);
-                    i.putExtra("event", Parcels.wrap(event));
+                    //i.putExtra("event", Parcels.wrap(event));
+                    i.putExtra("Title", event.getEventTitle());
+                    i.putExtra("Time", event.getEventTime());
+                    i.putExtra("Date", event.getEventDate());
+                    i.putExtra("Description", event.getDescription());
+                    i.putExtra("ExtraInfo", event.getExtraInfo());
+                    i.putExtra("Venue", event.getVenue());
                     context.startActivity(i);
                 }
             });

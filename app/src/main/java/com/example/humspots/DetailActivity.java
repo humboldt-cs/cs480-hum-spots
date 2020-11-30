@@ -43,6 +43,7 @@ public class DetailActivity extends AppCompatActivity {
     TextView tvDay;
     TextView tvMonth;
     TextView tvTitle;
+    TextView tvLinks;
     TextView tvDescription;
 
     @Override
@@ -55,17 +56,23 @@ public class DetailActivity extends AppCompatActivity {
         tvDay = findViewById(R.id.tvDay);
         tvMonth = findViewById(R.id.tvMonth);
         tvTitle = findViewById(R.id.tvTitle);
+        tvLinks = findViewById(R.id.tvLinks);
         tvDescription = findViewById(R.id.tvDescription);
 
-        final EventModel event = Parcels.unwrap(getIntent().getParcelableExtra("event"));
+        /*final EventModel event = Parcels.unwrap(getIntent().getParcelableExtra("event"));
 
-        Glide.with(this).load(event.getPosterURL()).into(ivImage);
+        Glide.with(this).load(event.getPosterURL()).into(ivImage);*/
+        Bundle bundle = getIntent().getExtras();
 
-        tvDay.setText(event.getDayOfMonth());
-        tvMonth.setText(event.getMonthOfYear());
-        tvTitle.setText(event.getTitle());
-        tvDescription.setText(event.getDescription());
+        String day = bundle.getString("Date").substring(5,7);
+        String month = bundle.getString("Date").substring(0,3);
 
+        tvDay.setText(day);
+        tvMonth.setText(month);
+        tvTitle.setText(bundle.getString("Title"));
+        tvDescription.setText(bundle.getString("Description"));
+        tvLinks.setText(bundle.getString("ExtraInfo"));
+/*
         //get venue info
         final String venueId = event.getVenueId();
 
@@ -104,10 +111,10 @@ public class DetailActivity extends AppCompatActivity {
                     Log.d(TAG, "onFailure");
                 }
             });
-        }
+        }*/
 
 
-        ivMapTest.setOnClickListener(new View.OnClickListener() {
+        /*ivMapTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getBaseContext(), "Map loading..", Toast.LENGTH_SHORT).show();
@@ -123,6 +130,6 @@ public class DetailActivity extends AppCompatActivity {
                 fragment.setArguments(bundle);
                 fragmentManager.beginTransaction().replace(R.id.eFrame, fragment).commit();
             }
-        });
+        });*/
     }
 }

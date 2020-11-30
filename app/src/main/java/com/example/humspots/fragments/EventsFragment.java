@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
-import com.amplifyframework.api.graphql.model.ModelMutation;
+//import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Event;
@@ -39,7 +39,7 @@ public class EventsFragment extends Fragment {
     public static final String TAG = "EventsFragment";
 
     EventAdapter eventAdapter;
-    List<Event> events;
+    List<Event> events = new ArrayList<>();;
     RecyclerView rvEvents;
 
     public EventsFragment() {
@@ -52,9 +52,8 @@ public class EventsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        events = new ArrayList<>();
-        //create the adapter
-        eventAdapter = new EventAdapter(getContext(), events);
+        //events = new ArrayList<>();
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_events, container, false);
     }
@@ -65,34 +64,66 @@ public class EventsFragment extends Fragment {
 
         rvEvents = view.findViewById(R.id.rvEvents);
         //set a layout manager on RV
-        rvEvents.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvEvents.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        //create the adapter
+        eventAdapter = new EventAdapter(this.getContext(), events);
 
         //set the adapter on the recycler view
         rvEvents.setAdapter(eventAdapter);
 
-        amplifyAndSetAdapter();
+        //amplifyAndSetAdapter();
+        try {
+            // Add these lines to add the AWSApiPlugin plugins
+            Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.configure(getApplicationContext());
+
+            Log.i(TAG, "Initialized Amplify");
+        } catch (AmplifyException error) {
+            Log.e(TAG, "Could not initialize Amplify", error);
+        }
+        Amplify.API.query(
+                ModelQuery.list(Event.class),
+                response -> {
+                    //Log.i("Amplify", response.getData().toString());
+                    for (Event event : response.getData()) {
+                        Log.i("Amplify", "Title: " + event.getEventTitle() + " Date: " + event.getEventDate() + " Time: " + event.getEventTime()
+                                + " PostURL: " + event.getPostUrl() + " ExtraInfo: " + event.getExtraInfo() + " Venue: " + event.getVenue() + " Template: " + event.getTemplate());
+                        try {
+                            events.add(event);
+                            Log.i(TAG, "Events: " + events.size());
+                        } catch (Exception e) {
+                            Log.e(TAG, "Events: ", e);
+                        }
+                    }
+                    Thread thread = new Thread(){
+                        @Override
+                        public void run() {
+                            try {
+                                synchronized (this) {
+                                    wait(100);
+
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            eventAdapter.notifyDataSetChanged();
+                                        }
+                                    });
+
+                                }
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }};
+                    };
+                    thread.start();
+                },
+                error -> Log.e("Amplify", "Query failure", error)
+        );
+
+
+
         //for some reason the code only works with both notifyDataSetChanged (other is in the other thread)
         eventAdapter.notifyDataSetChanged();
 
-    }
-
-    private void addEventToAWS() {
-        Event todo = Event.builder().eventTitle("My todo")
-                .eventDate("11/21/20")
-                .eventTime("11:30:00")
-                .extraInfo("AHHHHHHHHHHHHHHHHH")
-                .category("temp")
-                .description("this is a description")
-                .template("Lost Coast")
-                .postUrl("https://docs.amplify.aws/lib/graphqlapi/mutate-data/q/platform/android")
-                .venue("McDonalds")
-                .build();
-
-        Amplify.API.mutate(
-                ModelMutation.create(todo),
-                response -> Log.i(TAG, "Added Todo with id: " + response.getData().getId()),
-                error -> Log.e(TAG, "Create failed", error)
-        );
     }
 
     private void amplifyAndSetAdapter() {
@@ -118,9 +149,11 @@ public class EventsFragment extends Fragment {
         Amplify.API.query(
                 ModelQuery.list(Event.class),
                 response -> {
+                    //Log.v(TAG, response.body().string());
                     for (Event event : response.getData()) {
-                        Log.i("Amplify", "Title: " + event.getEventTitle() + " Date: " + event.getEventDate() + " Time: " + event.getEventTime()
+                        /*Log.i("Amplify", "Title: " + event.getEventTitle() + " Date: " + event.getEventDate() + " Time: " + event.getEventTime()
                                 + " PostURL: " + event.getPostUrl() + " ExtraInfo: " + event.getExtraInfo() + " Venue: " + event.getVenue() + " Template: " + event.getTemplate());
+                        */
                         addEvents(event);
                     }
                     Thread thread = new Thread(){
