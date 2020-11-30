@@ -71,55 +71,7 @@ public class EventsFragment extends Fragment {
         //set the adapter on the recycler view
         rvEvents.setAdapter(eventAdapter);
 
-        //amplifyAndSetAdapter();
-        try {
-            // Add these lines to add the AWSApiPlugin plugins
-            Amplify.addPlugin(new AWSApiPlugin());
-            Amplify.configure(getApplicationContext());
-
-            Log.i(TAG, "Initialized Amplify");
-        } catch (AmplifyException error) {
-            Log.e(TAG, "Could not initialize Amplify", error);
-        }
-        Amplify.API.query(
-                ModelQuery.list(Event.class),
-                response -> {
-                    //Log.i("Amplify", response.getData().toString());
-                    for (Event event : response.getData()) {
-                        Log.i("Amplify", "Title: " + event.getEventTitle() + " Date: " + event.getEventDate() + " Time: " + event.getEventTime()
-                                + " PostURL: " + event.getPostUrl() + " ExtraInfo: " + event.getExtraInfo() + " Venue: " + event.getVenue() + " Template: " + event.getTemplate());
-                        try {
-                            events.add(event);
-                            Log.i(TAG, "Events: " + events.size());
-                        } catch (Exception e) {
-                            Log.e(TAG, "Events: ", e);
-                        }
-                    }
-                    Thread thread = new Thread(){
-                        @Override
-                        public void run() {
-                            try {
-                                synchronized (this) {
-                                    wait(100);
-
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            eventAdapter.notifyDataSetChanged();
-                                        }
-                                    });
-
-                                }
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }};
-                    };
-                    thread.start();
-                },
-                error -> Log.e("Amplify", "Query failure", error)
-        );
-
-
+        amplifyAndSetAdapter();
 
         //for some reason the code only works with both notifyDataSetChanged (other is in the other thread)
         eventAdapter.notifyDataSetChanged();
@@ -144,16 +96,13 @@ public class EventsFragment extends Fragment {
     }
 
     private void amplifyQuery() {
-
-
         Amplify.API.query(
                 ModelQuery.list(Event.class),
                 response -> {
-                    //Log.v(TAG, response.body().string());
                     for (Event event : response.getData()) {
-                        /*Log.i("Amplify", "Title: " + event.getEventTitle() + " Date: " + event.getEventDate() + " Time: " + event.getEventTime()
+                        Log.i(TAG, "Title: " + event.getEventTitle() + " Date: " + event.getEventDate() + " Time: " + event.getEventTime()
                                 + " PostURL: " + event.getPostUrl() + " ExtraInfo: " + event.getExtraInfo() + " Venue: " + event.getVenue() + " Template: " + event.getTemplate());
-                        */
+
                         addEvents(event);
                     }
                     Thread thread = new Thread(){
@@ -177,7 +126,7 @@ public class EventsFragment extends Fragment {
                     };
                     thread.start();
                 },
-                error -> Log.e("Amplify", "Query failure", error)
+                error -> Log.e(TAG, "Query failure", error)
         );
     }
 
