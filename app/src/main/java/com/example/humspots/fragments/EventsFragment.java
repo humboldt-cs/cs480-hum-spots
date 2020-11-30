@@ -113,22 +113,31 @@ public class EventsFragment extends Fragment {
     }
 
     private void amplifyQuery() {
-
-
         Amplify.API.query(
                 ModelQuery.list(Event.class),
                 response -> {
                     for (Event event : response.getData()) {
                         Log.i("Amplify", "Title: " + event.getEventTitle() + " Date: " + event.getEventDate() + " Time: " + event.getEventTime()
                                 + " PostURL: " + event.getPostUrl() + " ExtraInfo: " + event.getExtraInfo() + " Venue: " + event.getVenue() + " Template: " + event.getTemplate());
-                        addEvents(event);
+
+                        //addEvents(event);
+                        if(event == null){
+                            continue;
+                        }
+                        try {
+                            events.add(event);
+                            Log.i(TAG, "Events: " + events.size());
+                        } catch (Exception e) {
+                            Log.e(TAG, "Events: ", e);
+                        }
                     }
+                    //Used to seperate the ui using a wait function to add the proper time delay so that an error isnt thrown
                     Thread thread = new Thread(){
                         @Override
                         public void run() {
                             try {
                                 synchronized (this) {
-                                    wait(100);
+                                    wait(500);
 
                                     runOnUiThread(new Runnable() {
                                         @Override
