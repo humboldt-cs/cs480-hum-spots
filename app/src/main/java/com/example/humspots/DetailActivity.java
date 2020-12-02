@@ -23,8 +23,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
 
+
+import javax.net.ssl.HttpsURLConnection;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 import okhttp3.Headers;
 
@@ -37,6 +52,10 @@ public class DetailActivity extends AppCompatActivity {
     String venLongitude;
     String venLatitude;
     String venName;
+
+    static String subscriptionKey = "ArW0CmIBq00h3BNC79eevgIXL_HuNwBXpb2Z1E_xd_9w7kPioxAt9UQRusd5zZVn";
+    static String host = "https://api.cognitive.microsoft.com";
+    static String path = "/bing/v7.0/images/search";
 
     ImageView ivImage;
     ImageView ivMapTest;
@@ -77,46 +96,36 @@ public class DetailActivity extends AppCompatActivity {
         tvTitle.setText(bundle.getString("Title"));
         tvDescription.setText(bundle.getString("Description"));
         tvLinks.setText(bundle.getString("PostURL") + "\n" + extraInfo);
-/*
-        //get venue info
-        final String venueId = event.getVenueId();
 
-        if(venueId.equals("null")) {
-            venLatitude = "40.8747";
-            venLongitude = "-124.0789";
-            venName = "Online Event";
+        /*
+        // construct the search request URL (in the form of endpoint + query string)
+        URL url = null;
+        try {
+            url = new URL(host + path + "?q=" +  URLEncoder.encode(bundle.getString("Venue"), "UTF-8"));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        else{
-            String requestVenue = String.format("https://www.eventbriteapi.com/v3/venues/%s/?token=FXZ47VT64UDMVS6KNOP4", venueId);
-            venue = new ArrayList<>();
-            AsyncHttpClient client = new AsyncHttpClient();
+        HttpsURLConnection connection = null;
+        try {
+            connection = (HttpsURLConnection)url.openConnection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        connection.setRequestProperty("Ocp-Apim-Subscription-Key", subscriptionKey);
 
-            client.get(requestVenue, new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Headers headers, JSON json) {
-                    Log.d(TAG, "onSuccess");
-                    JSONObject jsonObject = json.jsonObject;
-                    try {
-                        results = "[" + jsonObject.toString() + "]";
-                        JSONArray array = new JSONArray(results);
-                        venue.addAll(Venue.fromJsonArray(array));
-
-                        venLongitude = venue.get(0).getVenueLongitude();
-                        venLatitude = venue.get(0).getVenueLatitude();
-                        venName = venue.get(0).getVenueName();
-
-                        Log.i(TAG, "Results: " + venue.toString());
-                    } catch (JSONException e) {
-                        Log.e(TAG, "hit json exception", e);
-                    }
-                }
-
-                @Override
-                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                    Log.d(TAG, "onFailure");
-                }
-            });
-        }*/
+        // receive JSON body
+        InputStream stream = null;
+        try {
+            stream = connection.getInputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String response = new Scanner(stream).useDelimiter("\\A").next();
+        // construct result object for return
+        SearchResponse results = new SearchResults(new HashMap<String, String>(), response);
+        */
 
 
         /*ivMapTest.setOnClickListener(new View.OnClickListener() {
