@@ -39,7 +39,8 @@
         android:roundIcon="@drawable/appicon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:name">
         <activity android:name=".LoginPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,7 +65,6 @@
         </activity>
         <activity android:name=".DetailActivity" />
         <activity android:name=".TrailDetails" />
-        <activity android:name=".CreateNewUserActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"

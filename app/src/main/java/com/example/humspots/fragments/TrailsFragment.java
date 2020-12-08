@@ -39,7 +39,8 @@ import static com.parse.Parse.getApplicationContext;
  */
 public class TrailsFragment extends Fragment {
 
-    public static final String TEST_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=Trails+in+Humboldt&key=AIzaSyB2SbC24Cm4_D1Dl8qooOLLckDtBa362bM";
+    //public static final String TEST_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=Trails+in+Humboldt&key=AIzaSyB2SbC24Cm4_D1Dl8qooOLLckDtBa362bM";
+    public static final String TEST_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=Trails+in+Humboldt&key=AIzaSyBaBdfVTrR03AxYbbGipw7cMv39L3uaezA";
     public static final String TAG = "TrailsActivity";
 
     List<Trail> trails;

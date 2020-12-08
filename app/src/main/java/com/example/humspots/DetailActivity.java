@@ -4,10 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.humspots.fragments.MapFragment;
-import com.example.humspots.models.Event;
+//import com.example.humspots.models.EventModel;
 import com.example.humspots.models.Venue;
 
 import org.json.JSONArray;
@@ -46,6 +43,7 @@ public class DetailActivity extends AppCompatActivity {
     TextView tvDay;
     TextView tvMonth;
     TextView tvTitle;
+    TextView tvLinks;
     TextView tvDescription;
 
     @Override
@@ -58,17 +56,28 @@ public class DetailActivity extends AppCompatActivity {
         tvDay = findViewById(R.id.tvDay);
         tvMonth = findViewById(R.id.tvMonth);
         tvTitle = findViewById(R.id.tvTitle);
+        tvLinks = findViewById(R.id.tvLinks);
         tvDescription = findViewById(R.id.tvDescription);
 
-        final Event event = Parcels.unwrap(getIntent().getParcelableExtra("event"));
+        /*final EventModel event = Parcels.unwrap(getIntent().getParcelableExtra("event"));
 
-        Glide.with(this).load(event.getPosterURL()).into(ivImage);
+        Glide.with(this).load(event.getPosterURL()).into(ivImage);*/
+        Bundle bundle = getIntent().getExtras();
 
-        tvDay.setText(event.getDayOfMonth());
-        tvMonth.setText(event.getMonthOfYear());
-        tvTitle.setText(event.getTitle());
-        tvDescription.setText(event.getDescription());
+        String day = bundle.getString("Date").substring(5,7);
+        String month = bundle.getString("Date").substring(0,3);
 
+        String extraInfo = (bundle.getString("ExtraInfo") == "" ||
+                bundle.getString("ExtraInfo") == " "||
+                bundle.getString("ExtraInfo") == null ||
+                bundle.getString("ExtraInfo").isEmpty()) ? "" : "\nContact Info:\n" + bundle.getString("ExtraInfo");
+
+        tvDay.setText(day);
+        tvMonth.setText(month);
+        tvTitle.setText(bundle.getString("Title"));
+        tvDescription.setText(bundle.getString("Description"));
+        tvLinks.setText(bundle.getString("PostURL") + "\n" + extraInfo);
+/*
         //get venue info
         final String venueId = event.getVenueId();
 
@@ -107,10 +116,10 @@ public class DetailActivity extends AppCompatActivity {
                     Log.d(TAG, "onFailure");
                 }
             });
-        }
+        }*/
 
 
-        ivMapTest.setOnClickListener(new View.OnClickListener() {
+        /*ivMapTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getBaseContext(), "Map loading..", Toast.LENGTH_SHORT).show();
@@ -126,6 +135,6 @@ public class DetailActivity extends AppCompatActivity {
                 fragment.setArguments(bundle);
                 fragmentManager.beginTransaction().replace(R.id.eFrame, fragment).commit();
             }
-        });
+        });*/
     }
 }
