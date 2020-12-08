@@ -1,0 +1,12 @@
+type Event @model {
+  id: ID!
+  EventTitle: String
+  Description: String
+  EventDate: String
+  EventTime: String
+  Category: String
+  PostURL: String
+  ExtraInfo: String
+  Venue: String
+  Template: String
+}
