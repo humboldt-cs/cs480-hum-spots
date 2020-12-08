@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.humspots.fragments.MapFragment;
-import com.example.humspots.models.EventModel;
+//import com.example.humspots.models.EventModel;
 import com.example.humspots.models.Venue;
 
 import org.json.JSONArray;
