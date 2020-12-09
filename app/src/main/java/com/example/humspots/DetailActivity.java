@@ -11,12 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplifyframework.datastore.generated.model.Event;
 import com.bumptech.glide.Glide;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.humspots.fragments.MapFragment;
-//import com.example.humspots.models.EventModel;
-import com.example.humspots.models.Venue;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,58 +31,77 @@ public class DetailActivity extends AppCompatActivity {
 
     public static final String TAG = "DetailActivity";
 
-    List<Venue> venue;
-    String results;
-    String venLongitude;
-    String venLatitude;
-    String venName;
+    //String venName;
 
-    ImageView ivImage;
+    //ImageView ivImage;
     ImageView ivMapTest;
     TextView tvDay;
     TextView tvMonth;
     TextView tvTitle;
-    TextView tvLinks;
     TextView tvDescription;
+    TextView tvTime;
+    TextView tvLinks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        ivImage = findViewById(R.id.ivImage);
+        //ivImage = findViewById(R.id.ivImage);
         ivMapTest = findViewById(R.id.ivMapTest);
         tvDay = findViewById(R.id.tvDay);
         tvMonth = findViewById(R.id.tvMonth);
         tvTitle = findViewById(R.id.tvTitle);
-        tvLinks = findViewById(R.id.tvLinks);
         tvDescription = findViewById(R.id.tvDescription);
+        tvTime = findViewById(R.id.tvTime);
+        tvLinks = findViewById(R.id.tvLinks);
 
-        /*final EventModel event = Parcels.unwrap(getIntent().getParcelableExtra("event"));
+        //final Event event = Parcels.unwrap(getIntent().getParcelableExtra("event"));
 
-        Glide.with(this).load(event.getPosterURL()).into(ivImage);*/
+        String eventTime = "";
+        String eventTitle = "";
+        String eventSummary = "";
+        String eventExtraInfo = "";
+        String eventVenue = "";
+        String eventDate = "";
+        //Glide.with(this).load(event.getPosterURL()).into(ivImage);
         Bundle bundle = getIntent().getExtras();
+        if(bundle == null){
+            Log.i(TAG, "Event has no details loaded...");
+            Toast.makeText(DetailActivity.this, "Error Loading Details...", Toast.LENGTH_LONG).show();
+        }
+        else{
+            eventTitle = bundle.getString("Title");
+            eventTime = bundle.getString("Time");
+            eventDate = bundle.getString("Date");
+            eventSummary = bundle.getString("Summary");
+            eventExtraInfo = bundle.getString("ExtraInfo");
+            eventVenue = bundle.getString("Venue");
+        }
 
-        String day = bundle.getString("Date").substring(5,7);
-        String month = bundle.getString("Date").substring(0,3);
+        /*tvDay.setText(event.getDayOfMonth());
+        tvMonth.setText(event.getMonthOfYear());
+        tvTime.setText(event.getEventTime());
+        tvTitle.setText(event.getEventTitle());
+        tvDescription.setText(event.getDescription());
+        tvLinks.setText(event.getExtraInfo());
+        */
 
-        String extraInfo = (bundle.getString("ExtraInfo") == "" ||
-                bundle.getString("ExtraInfo") == " "||
-                bundle.getString("ExtraInfo") == null ||
-                bundle.getString("ExtraInfo").isEmpty()) ? "" : "\nContact Info:\n" + bundle.getString("ExtraInfo");
+        String month = eventDate.substring(0, 3);
+        String day = eventDate.substring(5, 7);
 
         tvDay.setText(day);
         tvMonth.setText(month);
-        tvTitle.setText(bundle.getString("Title"));
-        tvDescription.setText(bundle.getString("Description"));
-        tvLinks.setText(bundle.getString("PostURL") + "\n" + extraInfo);
-/*
-        //get venue info
-        final String venueId = event.getVenueId();
+        tvTime.setText(eventTime);
+        tvTitle.setText(eventTitle);
+        tvDescription.setText(eventSummary);
+        tvLinks.setText(eventExtraInfo);
 
-        if(venueId.equals("null")) {
-            venLatitude = "40.8747";
-            venLongitude = "-124.0789";
+        /*
+        //get venue info
+        //final String venue = event.getVenue();
+
+        /*if(venue.equals("null")) {
             venName = "Online Event";
         }
         else{
@@ -116,13 +134,13 @@ public class DetailActivity extends AppCompatActivity {
                     Log.d(TAG, "onFailure");
                 }
             });
-        }*/
+        }
 
 
         /*ivMapTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Map loading..", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Map loading..", Toast.LENGTH_LONG).show();
 
                 Bundle bundle = new Bundle();
                 bundle.putString("lat", venLatitude);
