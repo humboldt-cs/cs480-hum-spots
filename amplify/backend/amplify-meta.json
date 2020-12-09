@@ -1,0 +1,42 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-cs480humspotsv924-dev-114223-authRole",
+      "UnauthRoleArn": "arn:aws:iam::888521325844:role/amplify-cs480humspotsv924-dev-114223-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::888521325844:role/amplify-cs480humspotsv924-dev-114223-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-cs480humspotsv924-dev-114223-deployment",
+      "UnauthRoleName": "amplify-cs480humspotsv924-dev-114223-unauthRole",
+      "StackName": "amplify-cs480humspotsv924-dev-114223",
+      "StackId": "arn:aws:cloudformation:us-west-2:888521325844:stack/amplify-cs480humspotsv924-dev-114223/24cc6fd0-29d6-11eb-a43e-020fc136e791",
+      "AmplifyAppId": "d3pctnzgaaqy23"
+    }
+  },
+  "api": {
+    "humspotsv4": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 365,
+              "description": "humspotsv4"
+            }
+          },
+          "additionalAuthenticationProviders": []
+        },
+        "GraphQLAPIIdOutput": "ktwlinzr7bgmjm7djc6m3qfdcq",
+        "GraphQLAPIEndpointOutput": "https://74rfobjbabhdpfzegmvygn4a44.appsync-api.us-west-2.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-npbadweb5zba7efok547dwri5y"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-cs480humspotsv924-dev-114223-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apihumspotsv4"
+      },
+      "lastPushTimeStamp": "2020-11-30T11:35:44.498Z",
+      "lastPushDirHash": "11TOq6+nSmbOlLG166UkRYn/uLY="
+    }
+  }
+}
