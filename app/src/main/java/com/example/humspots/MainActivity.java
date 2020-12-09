@@ -81,7 +81,9 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
+        //defaults the main menu to Events Fragement instead of the user having to choose something.
         fragmentManager.beginTransaction().replace(R.id.flContainer, new EventsFragment()).commit();
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
