@@ -16,7 +16,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -62,11 +61,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         MapsInitializer.initialize(getContext());
 
         mMap = googleMap;
+
         String name = getArguments().getString("name");
-        //String name = null;
+
         if(name != null){
-            double lat = getArguments().getDouble("lat");
-            double longi = getArguments().getDouble("long");
+            double lat = Double.parseDouble(getArguments().getString("lat"));
+            double longi = Double.parseDouble(getArguments().getString("long"));
             LatLng location = new LatLng(lat, longi);
 
             mMap.addMarker((new MarkerOptions().position(location).title(name)));

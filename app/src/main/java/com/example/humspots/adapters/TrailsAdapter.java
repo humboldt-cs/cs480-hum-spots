@@ -3,7 +3,6 @@ package com.example.humspots.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,38 +10,36 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.load.*;
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.humspots.R;
 import com.example.humspots.TrailDetails;
 import com.example.humspots.models.Trail;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.PhotoMetadata;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPhotoRequest;
-import com.google.android.libraries.places.api.net.FetchPhotoResponse;
 import com.google.android.libraries.places.api.net.FetchPlaceRequest;
-import com.google.android.libraries.places.api.net.FetchPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import okhttp3.Headers;
 
 import static com.parse.Parse.getApplicationContext;
 
@@ -86,7 +83,7 @@ public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder
         ImageView ivTrailImage;
         TextView tvTrailName;
         TextView tvTrailSummary;
-        TextView tvTrailLength;
+        TextView tvDistanceFrom;
 
         public ViewHolder(View trailView) {
             super(trailView);
@@ -95,7 +92,7 @@ public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder
             ivTrailImage = trailView.findViewById(R.id.ivTrailImage);
             tvTrailName = trailView.findViewById(R.id.tvTrailName);
             tvTrailSummary = trailView.findViewById(R.id.tvTrailSummary);
-            tvTrailLength = trailView.findViewById(R.id.tvTrailLength);
+            tvDistanceFrom = trailView.findViewById(R.id.tvDistanceFrom);
         }
 
         public void bind(final Trail trail) {
@@ -111,8 +108,10 @@ public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder
             final List<Place.Field> fields = Collections.singletonList(Place.Field.PHOTO_METADATAS);
 
             for (int i = 0; i < trails.size(); i++) {
+                String id = trails.get(i).getPlace_id();
+
                 //Get a place object (this uses fetchPlace(), but can be replaced by findCurrentPlace())
-                final FetchPlaceRequest placeRequest = FetchPlaceRequest.newInstance(trails.get(i).getPlace_id(), fields);
+                final FetchPlaceRequest placeRequest = FetchPlaceRequest.newInstance(id, fields);
 
                 int finalI = i;
                 placesClient.fetchPlace(placeRequest).addOnSuccessListener((response) -> {
@@ -136,7 +135,35 @@ public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder
                             .build();
                     placesClient.fetchPhoto(photoRequest).addOnSuccessListener((fetchPhotoResponse) -> {
                         Bitmap bitmap = fetchPhotoResponse.getBitmap();
-                        //ivTrailImage.setImageBitmap(bitmap);
+
+                        AsyncHttpClient client = new AsyncHttpClient();
+
+                        String DETAILS_REQUEST_URL = String.format("https://maps.googleapis.com/maps/api/place/details/json?place_id=%s&fields=name,reviews&key=AIzaSyB2SbC24Cm4_D1Dl8qooOLLckDtBa362bM",id);
+
+                        //JSON Request
+                        client.get(DETAILS_REQUEST_URL, new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                                Log.d(TAG, "onSuccess");
+                                JSONObject outerMost = json.jsonObject;
+
+                                try {
+                                    //get the top review for the location
+                                    JSONArray jsonArray = outerMost.getJSONObject("result").getJSONArray("reviews");
+                                    String top = jsonArray.getJSONObject(0).getString("text");
+                                    trail.setReview(top);
+
+                                } catch (JSONException e) {
+                                    trail.setReview("No reviews for this location yet!");
+                                    Log.e(TAG, "hit json exception, no data for " + id, e);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                                Log.d(TAG, "onFailure");
+                            }
+                        });
                         trails.get(finalI).setIcon(bitmap);
                     }).addOnFailureListener((exception) -> {
                         if (exception instanceof ApiException) {
@@ -147,29 +174,22 @@ public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder
                     });
                 });
             }
-                tvTrailName.setText(trail.getName());
-                //tvTrailLength.setText("(" + trail.getLength() + " mi)");
-                //tvTrailSummary.setText(trail.getReview());
 
-                RequestOptions options = new RequestOptions()
-                        .centerCrop()
-                        .placeholder(R.drawable.loading)
-                        .error(R.drawable.unavailableimage)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .priority(Priority.HIGH);
-                //Glide.with(context).load(trail.getIcon()).apply(options).into(ivTrailImage);
-                ivTrailImage.setImageBitmap(trail.getIcon());
+            tvTrailName.setText(trail.getName());
+            tvDistanceFrom.setText(String.format("%s miles away", String.valueOf(trail.getDistanceFrom())));
+            tvTrailSummary.setText(trail.getReview());
+            ivTrailImage.setImageBitmap(trail.getIcon());
 
-                //register the click listener on the whole container.
-                trailContainer.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //navigate to new activity on click.
-                        Intent i = new Intent(context, TrailDetails.class);
-                        i.putExtra("trail", Parcels.wrap(trail));
-                        context.startActivity(i);
-                    }
-                });
+            //register the click listener on the whole container.
+            trailContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //navigate to new activity on click.
+                    Intent i = new Intent(context, TrailDetails.class);
+                    i.putExtra("trail", Parcels.wrap(trail));
+                    context.startActivity(i);
+                }
+            });
         }
     }
 }

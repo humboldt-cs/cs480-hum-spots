@@ -32,7 +32,7 @@
         android:id="@+id/tvTrailSummary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvTrailLength"
+        android:layout_below="@+id/tvDistanceFrom"
         android:layout_alignStart="@+id/tvTrailName"
         android:layout_marginStart="3dp"
         android:layout_marginTop="3dp"
@@ -42,7 +42,7 @@
         android:text="This is a short summary or description of the trail." />
 
     <TextView
-        android:id="@+id/tvTrailLength"
+        android:id="@+id/tvDistanceFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvTrailName"

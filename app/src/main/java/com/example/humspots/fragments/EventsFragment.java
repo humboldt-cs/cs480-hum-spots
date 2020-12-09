@@ -59,7 +59,6 @@ public class EventsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         RecyclerView rvEvents = view.findViewById(R.id.rvEvents);
-        //bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         events = new ArrayList<>();
 

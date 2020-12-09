@@ -29,18 +29,16 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.List;
+import java.lang.Math;
 
 import okhttp3.Headers;
-
-import static com.parse.Parse.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TrailsFragment extends Fragment {
-
-    public static final String TEST_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=Trails+in+Humboldt&key=AIzaSyB2SbC24Cm4_D1Dl8qooOLLckDtBa362bM";
-    public static final String TAG = "TrailsActivity";
+    public static final String TRAILS_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=Trails+in+Humboldt&key=AIzaSyB2SbC24Cm4_D1Dl8qooOLLckDtBa362bM";
+    public static final String TAG = "TrailsFragment";
 
     List<Trail> trails;
 
@@ -79,7 +77,7 @@ public class TrailsFragment extends Fragment {
         AsyncHttpClient client = new AsyncHttpClient();
 
         //JSON Request
-        client.get(TEST_URL, new JsonHttpResponseHandler() {
+        client.get(TRAILS_URL, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.d(TAG, "onSuccess");
@@ -88,10 +86,21 @@ public class TrailsFragment extends Fragment {
                 try {
                     //array of trail objects
                     JSONArray trail_arr = outerMost.getJSONArray("results");
-                    Log.i(TAG, "hi:" + trail_arr.toString());
                     trails.addAll(Trail.fromJsonArray(trail_arr));
+
+                    //get (lat, long) from current location.
+                    Double currLat = Double.parseDouble(getArguments().getString("lat"));
+                    Double currLong = Double.parseDouble(getArguments().getString("long"));
+
                     trailsAdapter.notifyDataSetChanged();
                     Log.i(TAG, "Trails: " + trails.size());
+
+                    for(int i = 0; i < trails.size(); i++) {
+                        double locLat = trails.get(i).getPlace_lat();
+                        double locLong = trails.get(i).getPlace_long();
+                        trails.get(i).setDistance_from(currLat, currLong, locLat, locLong);
+                    }
+
                 } catch (JSONException e) {
                     Log.e(TAG, "hit json exception", e);
                 }
@@ -102,6 +111,5 @@ public class TrailsFragment extends Fragment {
                 Log.d(TAG, "onFailure");
             }
         });
-
     }
 }
