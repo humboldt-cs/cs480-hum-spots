@@ -138,7 +138,7 @@ public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder
 
                         AsyncHttpClient client = new AsyncHttpClient();
 
-                        String DETAILS_REQUEST_URL = String.format("https://maps.googleapis.com/maps/api/place/details/json?place_id=%s&fields=name,reviews&key=AIzaSyB2SbC24Cm4_D1Dl8qooOLLckDtBa362bM",id);
+                        String DETAILS_REQUEST_URL = String.format("https://maps.googleapis.com/maps/api/place/details/json?place_id=%s&fields=name,reviews&key=AIzaSyBaBdfVTrR03AxYbbGipw7cMv39L3uaezA",id);
 
                         //JSON Request
                         client.get(DETAILS_REQUEST_URL, new JsonHttpResponseHandler() {

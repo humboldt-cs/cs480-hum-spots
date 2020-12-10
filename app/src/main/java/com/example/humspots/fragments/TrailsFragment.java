@@ -37,7 +37,7 @@ import okhttp3.Headers;
  * A simple {@link Fragment} subclass.
  */
 public class TrailsFragment extends Fragment {
-    public static final String TRAILS_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=Trails+in+Humboldt&key=AIzaSyB2SbC24Cm4_D1Dl8qooOLLckDtBa362bM";
+    public static final String TRAILS_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=Trails+in+Humboldt&key=AIzaSyBaBdfVTrR03AxYbbGipw7cMv39L3uaezA";
     public static final String TAG = "TrailsFragment";
 
     List<Trail> trails;
