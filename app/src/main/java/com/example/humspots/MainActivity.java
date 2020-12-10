@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
@@ -14,6 +15,11 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.core.Amplify;
+//import com.amplifyframework.datastore.AWSDataStorePlugin;
+import com.amplifyframework.datastore.generated.model.Event;
 import com.example.humspots.fragments.EventsFragment;
 import com.example.humspots.fragments.MapFragment;
 import com.example.humspots.fragments.SettingsFragment;
@@ -23,12 +29,13 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.amplifyframework.datastore.generated.model.Event;
 
 import okhttp3.Headers;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
 
     private BottomNavigationView bottomNavigationView;
     private FusedLocationProviderClient client;
@@ -69,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //defaults the main menu to Events Fragement instead of the user having to choose something.
+        fragmentManager.beginTransaction().replace(R.id.flContainer, new EventsFragment()).commit();
+
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -104,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
     }
 
     //request permission for location

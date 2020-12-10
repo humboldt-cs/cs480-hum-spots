@@ -39,9 +39,7 @@
         android:roundIcon="@drawable/appicon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:debuggable="true"
-        tools:ignore="GoogleAppIndexingWarning,HardcodedDebugMode"
-         >
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".LoginPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

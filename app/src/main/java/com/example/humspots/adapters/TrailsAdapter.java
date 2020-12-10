@@ -25,6 +25,7 @@ import com.example.humspots.TrailDetails;
 import com.example.humspots.models.Trail;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.libraries.places.api.Places;
+
 import com.google.android.libraries.places.api.model.PhotoMetadata;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.FetchPhotoRequest;
@@ -96,10 +97,10 @@ public class TrailsAdapter extends RecyclerView.Adapter<TrailsAdapter.ViewHolder
         }
 
         public void bind(final Trail trail) {
-            if (!Places.isInitialized()) {
+            //if (!Place.isInitialized()) {
                 //initialize places
-                Places.initialize(getApplicationContext(), getApplicationContext().getResources().getString(R.string.places_api_key));
-            }
+            Places.initialize(getApplicationContext(), getApplicationContext().getResources().getString(R.string.places_api_key));
+            //}
 
             //create new Places Client instance
             final PlacesClient placesClient = Places.createClient(getApplicationContext());

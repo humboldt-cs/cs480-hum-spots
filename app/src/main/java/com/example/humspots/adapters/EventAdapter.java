@@ -8,15 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.datastore.generated.model.Event;
 import com.bumptech.glide.Glide;
 import com.example.humspots.DetailActivity;
 import com.example.humspots.R;
-import com.example.humspots.models.Event;
 
 import org.parceler.Parcels;
 
@@ -47,7 +46,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         //get the event at the given position
         Event event = events.get(position);
         //bind the event data into the view holder
-        holder.bind(event);
+        if(event.getEventTitle() != "" && event.getId() != "")
+            holder.bind(event);
     }
 
     //returns the total number of items in the list
@@ -79,10 +79,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         public void bind(final Event event) {
             tvDay.setText(event.getDayOfMonth());
             tvMonth.setText(event.getMonthOfYear());
-            tvEventTitle.setText(event.getTitle());
-            tvSummary.setText(event.getSummary());
+            tvEventTitle.setText(event.getEventTitle());
+            tvSummary.setText(event.getDescription());
 
-            Glide.with(context).load(event.getPosterURL()).into(ivEventImage);
+            //Glide.with(context).load(event.getPostUrl()).into(ivEventImage);
 
             //register the click listener on the whole container.
             container.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +91,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
                     //then, navigate to new activity on click.
                     Intent i = new Intent(context, DetailActivity.class);
                     i.putExtra("event", Parcels.wrap(event));
+                    /*i.putExtra("Title", event.getEventTitle());
+                    i.putExtra("Time", event.getEventTime());
+                    i.putExtra("Date", event.getEventDate());
+                    i.putExtra("Summary", event.getDescription());
+                    i.putExtra("ExtraInfo", event.getExtraInfo());
+                    i.putExtra("Venue", event.getVenue());*/
                     context.startActivity(i);
                 }
             });

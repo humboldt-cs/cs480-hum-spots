@@ -4,22 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplifyframework.datastore.generated.model.Event;
 import com.bumptech.glide.Glide;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.humspots.fragments.MapFragment;
-import com.example.humspots.models.Event;
-import com.example.humspots.models.Venue;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,17 +31,18 @@ public class DetailActivity extends AppCompatActivity {
 
     public static final String TAG = "DetailActivity";
 
-    List<Venue> venue;
-    String results;
-    String venLongitude;
-    String venLatitude;
-    String venName;
+    //String venName;
+
+    static String subscriptionKey = "ArW0CmIBq00h3BNC79eevgIXL_HuNwBXpb2Z1E_xd_9w7kPioxAt9UQRusd5zZVn";
+    static String host = "https://api.cognitive.microsoft.com";
+    static String path = "/bing/v7.0/images/search";
 
     ImageView ivImage;
     ImageView ivMapTest;
     TextView tvDay;
     TextView tvMonth;
     TextView tvTitle;
+    TextView tvLinks;
     TextView tvDescription;
 
     @Override
@@ -58,62 +55,63 @@ public class DetailActivity extends AppCompatActivity {
         tvDay = findViewById(R.id.tvDay);
         tvMonth = findViewById(R.id.tvMonth);
         tvTitle = findViewById(R.id.tvTitle);
+        tvLinks = findViewById(R.id.tvLinks);
         tvDescription = findViewById(R.id.tvDescription);
 
-        final Event event = Parcels.unwrap(getIntent().getParcelableExtra("event"));
+        /*final EventModel event = Parcels.unwrap(getIntent().getParcelableExtra("event"));
 
-        Glide.with(this).load(event.getPosterURL()).into(ivImage);
+        Glide.with(this).load(event.getPosterURL()).into(ivImage);*/
+        Bundle bundle = getIntent().getExtras();
 
-        tvDay.setText(event.getDayOfMonth());
-        tvMonth.setText(event.getMonthOfYear());
-        tvTitle.setText(event.getTitle());
-        tvDescription.setText(event.getDescription());
+        String day = bundle.getString("Date").substring(5,7);
+        String month = bundle.getString("Date").substring(0,3);
 
-        //get venue info
-        final String venueId = event.getVenueId();
+        String extraInfo = (bundle.getString("ExtraInfo") == "" ||
+                bundle.getString("ExtraInfo") == " "||
+                bundle.getString("ExtraInfo") == null ||
+                bundle.getString("ExtraInfo").isEmpty()) ? "" : "\nContact Info:\n" + bundle.getString("ExtraInfo");
 
-        if(venueId.equals("null")) {
-            venLatitude = "40.8747";
-            venLongitude = "-124.0789";
-            venName = "Online Event";
+        tvDay.setText(day);
+        tvMonth.setText(month);
+        tvTitle.setText(bundle.getString("Title"));
+        tvDescription.setText(bundle.getString("Description"));
+        tvLinks.setText(bundle.getString("PostURL") + "\n" + extraInfo);
+
+        /*
+        // construct the search request URL (in the form of endpoint + query string)
+        URL url = null;
+        try {
+            url = new URL(host + path + "?q=" +  URLEncoder.encode(bundle.getString("Venue"), "UTF-8"));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        else{
-            String requestVenue = String.format("https://www.eventbriteapi.com/v3/venues/%s/?token=FXZ47VT64UDMVS6KNOP4", venueId);
-            venue = new ArrayList<>();
-            AsyncHttpClient client = new AsyncHttpClient();
-
-            client.get(requestVenue, new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Headers headers, JSON json) {
-                    Log.d(TAG, "onSuccess");
-                    JSONObject jsonObject = json.jsonObject;
-                    try {
-                        results = "[" + jsonObject.toString() + "]";
-                        JSONArray array = new JSONArray(results);
-                        venue.addAll(Venue.fromJsonArray(array));
-
-                        venLongitude = venue.get(0).getVenueLongitude();
-                        venLatitude = venue.get(0).getVenueLatitude();
-                        venName = venue.get(0).getVenueName();
-
-                        Log.i(TAG, "Results: " + venue.toString());
-                    } catch (JSONException e) {
-                        Log.e(TAG, "hit json exception", e);
-                    }
-                }
-
-                @Override
-                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                    Log.d(TAG, "onFailure");
-                }
-            });
+        HttpsURLConnection connection = null;
+        try {
+            connection = (HttpsURLConnection)url.openConnection();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        connection.setRequestProperty("Ocp-Apim-Subscription-Key", subscriptionKey);
+
+        // receive JSON body
+        InputStream stream = null;
+        try {
+            stream = connection.getInputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String response = new Scanner(stream).useDelimiter("\\A").next();
+        // construct result object for return
+        SearchResponse results = new SearchResults(new HashMap<String, String>(), response);
+        */
 
 
-        ivMapTest.setOnClickListener(new View.OnClickListener() {
+        /*ivMapTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Map loading..", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Map loading..", Toast.LENGTH_LONG).show();
 
                 Bundle bundle = new Bundle();
                 bundle.putString("lat", venLatitude);
@@ -126,6 +124,6 @@ public class DetailActivity extends AppCompatActivity {
                 fragment.setArguments(bundle);
                 fragmentManager.beginTransaction().replace(R.id.eFrame, fragment).commit();
             }
-        });
+        });*/
     }
 }

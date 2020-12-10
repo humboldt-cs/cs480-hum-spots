@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-cs480humspotsv924-dev-114223-authRole",
+      "UnauthRoleArn": "arn:aws:iam::888521325844:role/amplify-cs480humspotsv924-dev-114223-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::888521325844:role/amplify-cs480humspotsv924-dev-114223-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-cs480humspotsv924-dev-114223-deployment",
+      "UnauthRoleName": "amplify-cs480humspotsv924-dev-114223-unauthRole",
+      "StackName": "amplify-cs480humspotsv924-dev-114223",
+      "StackId": "arn:aws:cloudformation:us-west-2:888521325844:stack/amplify-cs480humspotsv924-dev-114223/24cc6fd0-29d6-11eb-a43e-020fc136e791",
+      "AmplifyAppId": "d3pctnzgaaqy23"
+    }
+  }
+}

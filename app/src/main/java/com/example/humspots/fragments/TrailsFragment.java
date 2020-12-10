@@ -33,6 +33,8 @@ import java.lang.Math;
 
 import okhttp3.Headers;
 
+import static com.parse.Parse.getApplicationContext;
+
 /**
  * A simple {@link Fragment} subclass.
  */
